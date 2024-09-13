@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #e1e1e1;
+  background-color: #0b0b0b;
+  scroll-behavior: smooth;
+
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: unset;
+  margin: unset;
+}
+#root{
+  min-width: 100%;
+  min-height: 100%;
+}
+@font-face {
+  font-family:BigShoulders ;
+  src: url('./assets/fonts/Big_Shoulders_Inline_Text/static/BigShouldersInlineText-Bold.ttf');
+}
+@font-face {
+  font-family:Ga_Maamli;
+  src: url('./assets/fonts/Ga_Maamli/GaMaamli-Regular.ttf');
+}
+@font-face {
+  font-family: Merienda;
+  src: url('./assets/fonts/Merienda/static/Merienda-SemiBold.ttf');
+}
+
+
+body {
+  box-sizing: border-box;
+  min-width: 100%;
+  min-height: 100dvh;
+  font-family: Merienda,Ga_Maamli, sans-serif;
+}
+
+

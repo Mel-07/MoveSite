@@ -1,0 +1,47 @@
+$secondary-bg:#2c2c2c;
+.cast-container{
+      .swiper-slide{
+        width: 12rem;
+    }  
+}
+.cast-items{
+    aspect-ratio: 1/1;
+    display: grid;
+     grid-auto-rows: minmax(100px, auto); 
+     gap: .5rem;
+}
+.cast-img-container{
+    display: grid;
+    place-content: center;
+.cast-img{
+    aspect-ratio: 1/1;
+    width: 6rem;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+}
+.cast-details{
+    text-align: center;
+    display: grid;
+    margin-top: .5rem;
+
+    p:last-child{
+        font-size: .65rem;
+        color: darken($color:white, $amount:60%);
+    }
+    p:first-child{
+        color: darken($color:white, $amount:30%);
+    }
+    P:nth-child(2){
+        font-size: .9rem;
+        font-weight: 100;
+        margin-top: .2rem;
+        color: darken($color:white, $amount:40%);
+    }
+}
+.cast-inner-container{
+    display: grid;
+    place-content: center;
+
+}

@@ -1,0 +1,21 @@
+.date-icon-median{
+    font-size: clamp(.3rem,.5rem + .5vw,.8rem);
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+    margin-bottom: .2rem;
+    max-width: max-content;
+    span:nth-child(2){
+        height: .3rem;
+        width: .3rem;
+        border-radius: 50%;
+        background: #e1e1e1;
+    }
+
+}
+
+.skeleton-width-height{
+    min-width: 100%;
+    min-height: 100%;
+}
+

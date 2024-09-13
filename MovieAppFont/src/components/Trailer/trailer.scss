@@ -1,0 +1,79 @@
+$poster-bg-color:#ff4500;
+$shadow-color:#0b0b0b;
+.trailer-aspect-ratio {
+    aspect-ratio: 16/9;
+}
+.trailer-container{
+    margin: 1rem auto;
+    user-select: none;
+    .swiper{
+        padding-block: 1rem;
+    }
+    .swiper-button-prev,.swiper-button-next{
+        background-color: $poster-bg-color;
+        border-radius: 6%;
+        width: 2rem;
+        height: 2rem;
+        box-shadow: 0px 0px 8px 10px #0b0b0b;
+    }
+    .swiper-button-prev::after,.swiper-button-next::after{
+        font-size: 1rem;
+        color: $shadow-color;
+    }
+    .swiper-button-prev{
+        box-shadow: -55px 0px 100px 88px $shadow-color;
+    }
+    .swiper-button-next{
+        box-shadow: 55px 0px 100px 88px $shadow-color;
+    }
+}
+.back-drop-container{
+    display: grid;
+    grid-auto-columns: 13rem;
+    grid-auto-flow: column;
+    gap: 2rem;
+    padding: .5rem;
+    background-color: $poster-bg-color;
+    .swiper-wrapper{
+        width: 20rem;
+        
+  .swiper-slide{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    transition: background-size 200ms ease-in-out;    display: flex;
+    &:hover{
+        background-size: 105%;
+    }
+
+  }
+}
+}
+
+.trailer{
+    border-radius: .5rem;
+}
+.trailer-content{
+    min-width: 100%;
+    min-height: 100% ;
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 6fr 1fr;
+    padding:.2rem;
+    border: .1rem solid $poster-bg-color;
+    border-radius: .5rem; 
+    -webkit-box-shadow: inset 0px -15px 29px 16px $shadow-color;
+    -moz-box-shadow: inset 0px -15px 29px 16px $shadow-color;
+    box-shadow: inset 0px -15px 29px 16px $shadow-color;
+    .play{
+    font-size: 2rem;
+    place-self: center;
+}
+.description{
+    align-self: end;
+    text-align: center;
+    .date-icon-median{
+        justify-content: center;
+    }
+}
+}

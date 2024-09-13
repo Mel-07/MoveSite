@@ -1,0 +1,16 @@
+.App-container{
+  min-width: 100%;
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+}
+.container-page{
+  min-width: 100%;
+  min-height: 100%;
+}
+
+@media (width < 662px) {
+  .App-container{
+    grid-template-columns: 1fr;
+  }
+}
