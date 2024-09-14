@@ -18,4 +18,25 @@
     min-width: 100%;
     min-height: 100%;
 }
+.page-number-section{
+    margin: 2rem auto;
+    max-width: 40rem;
+
+    .page-number-container{
+        display: grid;
+        grid-auto-flow: column;
+        place-content: center;
+        gap: .5rem;
+        grid-auto-columns: minmax(.5rem,auto);
+
+        .page-number{
+            text-align: center;
+            cursor: pointer;
+            padding: .5rem;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            transition: color 200ms ease-in-out;
+        }
+    }
+}
 

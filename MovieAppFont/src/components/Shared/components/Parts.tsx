@@ -4,13 +4,14 @@ import H1 from "../../Heading/H1";
 interface Props {
   items: TmdbMovie[]|TmdbSeries[],
   part:string,
-  rating?:boolean
+  rating?:boolean,
+  median_type?:string
 }
-function Parts({items,part,rating=false}:Props) {
+function Parts({items,part,rating=false,median_type}:Props) {
   return (
     <section className=" my-[2rem]">
       <H1 fontSize="1.8rem" text={part} fontFamily="font-big_Shoulders" />
-      <Grid rating={rating} items={items} />
+      <Grid median_type={median_type} rating={rating} items={items} />
     </section>
   );
 }

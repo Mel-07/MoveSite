@@ -98,17 +98,22 @@ useEffect(()=>{
       ) : (
         <Grid median_type={type} items={mediaResults} />
       )}
-{/* page */}
-      <section>
-        <ul>
-          {
-            pageNumber && 
-            isLoading === false
-             && getPageNumberArray(pageNumber).map((v)=>(
-
-              v <= 10 && <li onClick={()=>setPage(v)}>{v}</li> 
-            ))
-          }
+      {/* page */}
+      <section className="page-number-section">
+        <ul className="page-number-container">
+          {pageNumber &&
+            isLoading === false &&
+            getPageNumberArray(pageNumber).map(
+              (v) =>
+                v <= 10 && (
+                  <li
+                    className={`page-number ${page === v && "bg-[#ff4500]"}`}
+                    onClick={() => setPage(v)}
+                  >
+                    {v}
+                  </li>
+                )
+            )}
         </ul>
       </section>
     </div>
