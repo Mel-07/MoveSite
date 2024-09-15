@@ -3,9 +3,9 @@ import H1 from "../Heading/H1";
 import Skeleton from "react-loading-skeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, FreeMode } from "swiper/modules";
-import TitlePoster from "../Title/TitlePoster";
 import { FaPlay } from "react-icons/fa6";
 import './trailer.scss'
+import { checkMovieType, getFullDate } from "../../helpers/functions";
 
 interface Props {
     upcoming:TmdbMovie_TmdbSeries
@@ -42,7 +42,8 @@ function Trailer({upcoming}:Props) {
                 <div className="trailer-content">
                   <FaPlay className="play " />
                   <div className=" description">
-                    <TitlePoster title={true} font_size={['1rem']} items={items} />
+                    <span>{checkMovieType(items, undefined, true)}</span>
+                    <span>{getFullDate(items)}</span>
                   </div>
                 </div>
               </SwiperSlide>

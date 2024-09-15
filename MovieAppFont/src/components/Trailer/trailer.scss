@@ -47,6 +47,12 @@ $shadow-color:#0b0b0b;
     }
 
   }
+
+  @media (width < 620px) {
+
+    width: 15rem;
+    
+  }
 }
 }
 
@@ -72,6 +78,24 @@ $shadow-color:#0b0b0b;
 .description{
     align-self: end;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+        span:nth-child(1){
+            font-size:clamp(.5rem,1vw + .7rem,1rem);
+        }
+        span:nth-child(2){
+            font-size: clamp(.35rem,1vw + .5rem,.8rem);
+        }
+      @media (width < 620px) {
+
+        span:nth-child(1){
+            font-size: .8rem;
+        }
+                span:nth-child(2){
+            font-size: .6rem;
+        }
+    
+  }
     .date-icon-median{
         justify-content: center;
     }

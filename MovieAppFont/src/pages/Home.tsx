@@ -32,6 +32,7 @@ function Home() {
     `https://api.themoviedb.org/3/movie/${ids["movie"]}/recommendations?api_key=${key}`,
   ]);
   const result: Results<MedianItems> = useFetch<MedianItems>(apis);
+  const error = result[1];
   const trending: TmdbMovie_TmdbSeries = result[2][0]?.results || [];
   const upcoming = result[2][1] as TmdbUpcoming;
   const upcomingList = upcoming?.results || [];
@@ -41,21 +42,26 @@ function Home() {
     TmdbMovie | TmdbSeries
   >(true, recommendedMovies, recommendedSeries)[0] as unknown;
   const cover = joinRecommendation as TmdbMovie_TmdbSeries
-
-  console.log(cover.map(value=>{
+cover.map(value=>{
     return {
       media_type:value.media_type,
       id:value.id
     };
-  }))
+  })
 
 
   return (
     <>
       <div className=" px-2">
-        <Trending trending={trending} />
-        <Trailer upcoming={upcomingList} />
-        <Recommend items={cover} />
+        {error ? (
+          <div>{error.message}</div>
+        ) : (
+          <div>
+            <Trending trending={trending} />
+            <Trailer upcoming={upcomingList} />
+            <Recommend items={cover} />
+          </div>
+        )}
       </div>
     </>
   );

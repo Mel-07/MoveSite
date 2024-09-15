@@ -37,22 +37,34 @@ function Header() {
         </Link>
         <ul className="nav-lists">
           <li title="Home">
-            <NavLink to={"/"}>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-[#0b0b0b]" : "")}
+              to={"/"}
+            >
               <FaHouseChimney />
             </NavLink>
           </li>
           <li title="Top-rated">
-            <NavLink to={"/top-rated"}>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-[#0b0b0b]" : "")}
+              to={"/top-rated"}
+            >
               <FaGripfire />
             </NavLink>
           </li>
           <li title="Bookmark">
-            <NavLink to={"/bookmark"}>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-[#0b0b0b]" : "")}
+              to={"/bookmark"}
+            >
               <FaBookmark />
             </NavLink>
           </li>
           <li title="Title">
-            <NavLink to={`/title?id=${idType}&type=${movieType}`}>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-[#0b0b0b]" : "")}
+              to={`/title?id=${idType}&type=${movieType}`}
+            >
               <FaDiceSix />
             </NavLink>
           </li>

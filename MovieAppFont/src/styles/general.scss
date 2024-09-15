@@ -4,7 +4,7 @@
     align-items: center;
     gap: .2rem;
     margin-bottom: .2rem;
-    max-width: max-content;
+    min-width: max-content;
     span:nth-child(2){
         height: .3rem;
         width: .3rem;
@@ -19,7 +19,7 @@
     min-height: 100%;
 }
 .page-number-section{
-    margin: 2rem auto;
+    margin: 1rem auto;
     max-width: 40rem;
 
     .page-number-container{

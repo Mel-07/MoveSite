@@ -93,8 +93,9 @@ const shortMonths = [
   "Dec",
 ];
 
-const getFullDate = (details:TmdbMovieDetail|TmdbTVShowDetail)=>{
-
+const getFullDate = (
+  details: TmdbMovieDetail | TmdbTVShowDetail | TmdbMovie | TmdbSeries
+) => {
   const date =
     details && "release_date" in details
       ? details.release_date
@@ -102,17 +103,16 @@ const getFullDate = (details:TmdbMovieDetail|TmdbTVShowDetail)=>{
       ? details.first_air_date
       : "";
 
-
-  if(date === null){
+  if (date === null) {
     return;
   }
   const splitDate = date.split("-");
-  const year =  splitDate[0]
+  const year = splitDate[0];
   const month = Number(splitDate[1]);
-  const day = splitDate[2]
+  const day = splitDate[2];
 
-  return [day,"/",shortMonths[month - 1],"/",year].join('');
-}
+  return [day, "/", shortMonths[month - 1], "/", year].join("");
+};
 
 
 // calculate runtime

@@ -1,10 +1,11 @@
-$multi-use-color:#ff4500;
+$multi-use-color:#0b0b0b;
+$border-color:#ff4500;
 .list-aspect-ratio{
     aspect-ratio: 16/9;
 }
 .grid-container{
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(clamp(5rem,.5vw + 20rem, 25rem),1fr));
+    grid-template-columns: repeat(auto-fit,minmax(clamp(5rem,.5vw + 20rem, 25rem),1fr));
     gap: 2rem;
 }
 .grid-items{
@@ -28,7 +29,7 @@ $multi-use-color:#ff4500;
     display: grid;
     align-items: end;
     padding: 0.2rem;
-    border: 0.1rem solid $multi-use-color;
+    border: 0.1rem solid $border-color;
     border-radius: 0.5rem;
     box-shadow: inset 0px -15px 29px 16px #0b0b0b;
 }

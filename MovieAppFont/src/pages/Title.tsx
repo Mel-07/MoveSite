@@ -43,7 +43,7 @@ function Title() {
 
 
   return (
-    <div>
+    <>
       <Hero details={details} median_type={type} />
       <section className="px-4">
         <Cast casts={limitNumberOfCast(details?.credits?.cast)} />
@@ -51,7 +51,7 @@ function Title() {
           <Parts
           rating={true}
           part="Similar"
-          items={details?.recommendations?.results || []}
+            items={details?.recommendations?.results || []}
           />
         )}
         {details?.similar?.results.length > 0 && (
@@ -62,7 +62,7 @@ function Title() {
           />
         )}
       </section>
-    </div>
+    </>
   );
 }
 

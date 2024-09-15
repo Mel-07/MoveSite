@@ -1,9 +1,8 @@
 import { TmdbMovie, TmdbSeries, TmdbTVShowAndMovieResponse } from "../../Types/apptypes";
 import { FaFilm, FaTv } from "react-icons/fa6";
-import { checkMovieType } from "../../helpers/functions";
+import { checkMedianType, checkMovieType } from "../../helpers/functions";
 import '../../styles/general.scss'
 import TitleMovie from "./TitleMovie";
-
 interface Props {
     items:TmdbMovie|TmdbSeries|TmdbTVShowAndMovieResponse,
     font_size?:string[],
@@ -11,7 +10,6 @@ interface Props {
 }
 
 function TitlePoster({items,font_size =['.8rem','.8rem','.8rem','.8rem'],title}:Props) {
-
   return (
     <div>
       <div>
@@ -21,7 +19,7 @@ function TitlePoster({items,font_size =['.8rem','.8rem','.8rem','.8rem'],title}:
               fontSize: font_size[1],
             }}
           >
-            {checkMovieType(items, true)}
+            {checkMovieType(items, true)?checkMovieType(items, true) : 'No Year'}
           </span>
           <span></span>
           <span>
@@ -44,7 +42,7 @@ function TitlePoster({items,font_size =['.8rem','.8rem','.8rem','.8rem'],title}:
               fontSize: font_size[3],
             }}
           >
-            {checkMovieType(items)}
+            { 'media_type' in items && checkMedianType(items.media_type)}
           </span>
         </div>
         {title && (

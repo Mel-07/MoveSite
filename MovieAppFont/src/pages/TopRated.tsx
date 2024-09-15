@@ -64,7 +64,8 @@ useEffect(()=>{
 
   console.log(pageNumber)
   return (
-    <div className=" px-2">
+    <div className=" px-2 min-h-min">
+      {/* selector button */}
       <section className=" flex items-center gap-x-2">
         <FaGripfire className=" text-[2rem] text-[#ff4500]" />
         <H1

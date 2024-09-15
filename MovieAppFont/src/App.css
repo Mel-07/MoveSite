@@ -1,12 +1,11 @@
 .App-container{
   min-width: 100%;
-  min-height: 100%;
+  min-height: 100dvh;
   display: grid;
   grid-template-columns: max-content 1fr;
 }
 .container-page{
   min-width: 100%;
-  min-height: 100%;
 }
 
 @media (width < 662px) {

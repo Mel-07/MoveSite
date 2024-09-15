@@ -1,6 +1,6 @@
 $main-bg :#0b0b0b;
 $header-bg:#ff4500;
-$icon-bg:#2c2c2c;
+$icon-bg:#2c2c2cb9;
 .header-container{
     display: grid;
     place-content: center;
@@ -45,10 +45,9 @@ $icon-bg:#2c2c2c;
     gap: 1.6rem;
     font-size: 1.5rem;
     flex-direction: column;
-    transition: color 200ms ease-in-out ,transform 200ms ease-in-out ;
+    transition: color 200ms ease-in-out;
     li:hover{
         color:$main-bg;
-        transform: scale(1.2);
     }
     li:has(img){
         max-height: 2.6rem ;
