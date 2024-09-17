@@ -8,7 +8,6 @@ interface Props {
   rating?: boolean;
 }
 function List({to,item,rating}:Props){
-  console.log(item)
   return (
     <li
       style={{
