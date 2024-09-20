@@ -1,10 +1,10 @@
-
+import Form from "../components/ProfileForm/Form"
 
 function Profile() {
   return (
-    <div>
-      Profile
-    </div>
+    <>
+      <Form/>
+    </>
   )
 }
 

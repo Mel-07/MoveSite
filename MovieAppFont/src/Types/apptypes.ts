@@ -320,6 +320,12 @@ interface Review {
 
 // Combined Type
 type TmdbTVShowAndMovieResponse = TmdbMovieDetail |TmdbTVShowDetail;
+interface SearchType {
+    page: number;
+    results: TmdbMovie_TmdbSeries;
+    total_pages: number;
+    total_results: number;
+};
 
 export type {
     TmdbMovie,
@@ -335,5 +341,6 @@ export type {
     Genre,
     TVShowList,
     MovieRecommendations,
-    Casts
+    Casts,
+    SearchType
 }

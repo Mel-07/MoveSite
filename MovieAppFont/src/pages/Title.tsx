@@ -21,8 +21,6 @@ function Title() {
             );
 
             const results = await res.json()
-
-            console.log(results)
             setResult(results)
 
             if(!res.ok){

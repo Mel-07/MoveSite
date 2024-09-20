@@ -9,6 +9,7 @@ import {
   TmdbMovie_TmdbSeries,
  /*  TmdbSeries, */
   TmdbUpcoming,
+  SearchType
 } from "../Types/apptypes";
 import { useFetch, Results } from "../utils/useFetch";
 import "swiper/css/navigation";
@@ -23,13 +24,6 @@ const ids = {
   series: 94997, //House of dragon
 }
 import useSearch from "../utils/useSearch";
- interface SearchType {
-    page: number;
-    results: TmdbMovie_TmdbSeries;
-    total_pages: number;
-    total_results: number;
-  };
-
 
 function Home() {
 

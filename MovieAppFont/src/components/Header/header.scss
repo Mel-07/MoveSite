@@ -37,8 +37,22 @@ $icon-bg:#2c2c2cb9;
         border-radius: 0;
     }
 }
+@media (width < 1000px) and (orientation:landscape){
+        height: max-content;
+    place-content: unset;
+    .nav-container{
+        height: 0;
+        align-items: center;
+        padding: 1.5rem;
+        flex-direction: row;
+        margin:  auto;
+        min-width: 100%;
+        border-radius: 0;
+    }
+}
 
 }
+
 .nav-lists{
     display: flex;
     align-items: center;
@@ -70,6 +84,10 @@ $icon-bg:#2c2c2cb9;
         flex-direction: row;
         gap: .5rem;
         
+    }
+    @media (width < 1000px) and (orientation:landscape){
+                flex-direction: row;
+        gap: .5rem;
     }
 }
 

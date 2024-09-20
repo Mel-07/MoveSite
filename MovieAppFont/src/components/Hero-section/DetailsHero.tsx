@@ -13,7 +13,7 @@ interface Props{
 }
 function DetailsHero({items,font_size=['.8rem','.8rem','1.2rem'],median_type}:Props) {
     return (
-      items && (
+       Object.keys(items).length > 0&& (
         <div>
           <div className="date-type-runtime">
             <span
@@ -23,25 +23,25 @@ function DetailsHero({items,font_size=['.8rem','.8rem','1.2rem'],median_type}:Pr
             >
               {getFullDate(items)}
             </span>
-            {<span></span>}
-            <span>
-              {checkMedianType(median_type)
-                ? (
-                    <FaFilm
-                      style={{
-                        fontSize: font_size[2],
-                      }}
-                    />
-                  )
-                : (
-                    <FaTv
-                      style={{
-                        fontSize: font_size[2],
-                      }}
-                    />
-                  )}
-            </span>
-            {<span></span>}
+            { <span></span>}
+            (
+              <span>
+                {checkMedianType(median_type) ? (
+                  <FaFilm
+                    style={{
+                      fontSize: font_size[2],
+                    }}
+                  />
+                ) : (
+                  <FaTv
+                    style={{
+                      fontSize: font_size[2],
+                    }}
+                  />
+                )}
+              </span>
+            )
+            { <span></span>}
             <span
               style={{
                 fontSize: font_size[3],

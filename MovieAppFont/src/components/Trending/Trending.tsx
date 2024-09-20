@@ -4,6 +4,7 @@ import H1 from "../Heading/H1";
 import Skeleton from "react-loading-skeleton";
 import TitlePoster from "../Title/TitlePoster";
 import Rating from "../Shared/components/Rating";
+import trendinBackUpBg from"../../assets/images/trendingtransparent.png"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, FreeMode } from "swiper/modules";
 import './trending.scss'
@@ -36,7 +37,8 @@ function Trending({trending}:TrendingProps) {
                 key={items.id}
                 className="poster-aspect-ratio  poster"
                 style={{
-                  backgroundImage: `url(https://image.tmdb.org/t/p/w342/${items.poster_path})`,
+                  backgroundImage: items.poster_path ? `url(https://image.tmdb.org/t/p/w342/${items.poster_path})`:`url(${trendinBackUpBg})`,
+                  backgroundSize: !items.poster_path ? '150%': ''
                 }}
               >
                 <Link 
