@@ -24,11 +24,10 @@ interface Props extends HTMLAttributes<HTMLInputElement> {
     className?:string
     style?:CSSProperties,
     icon?:IconType,
-    error:string|null,
     value?:string|number|readonly string[]
 }
 
-function FormInput({type,name,className,style,error=null,value,icon:Icon,...props}:Props) {
+function FormInput({type,name,className,style,value,icon:Icon,...props}:Props) {
   return (
     <>
       <fieldset>
@@ -51,7 +50,6 @@ function FormInput({type,name,className,style,error=null,value,icon:Icon,...prop
           {...props}
         />
       </fieldset>
-      {error && <span>re</span>}
     </>
   );
 }

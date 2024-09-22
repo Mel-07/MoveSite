@@ -1,0 +1,16 @@
+.from-error-container{
+    font-size: clamp(.4rem,1vw + .65rem, .8rem);
+    li{
+        display: flex;
+        align-items: center;
+        margin-block: .2rem;
+        gap: .2rem;
+        color: red;
+        .exclamation{
+            border-radius: 50%;
+            padding: .1rem;
+            font-size: 1rem;
+            border: .001rem solid red;
+        }
+    }
+}

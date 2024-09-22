@@ -16,7 +16,7 @@ const validatePassWord = (password:string) =>{
 
 const validateUserName = (username:string) =>{
 
-    const testUsername = /^[a-zA-Z]{1,}$/.test(username) && username.length >= 2;
+    const testUsername = /^([a-zA-Z]\s*)+$/.test(username);
 
     return testUsername
 }
