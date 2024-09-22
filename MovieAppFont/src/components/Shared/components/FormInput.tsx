@@ -36,7 +36,7 @@ function FormInput({type,name,className,style,value,icon:Icon,...props}:Props) {
           <span>{name}</span>
         </legend>
         <input
-        value={value}
+          value={value}
           style={{
             borderRadius: "7px",
             minWidth: "100%",
@@ -45,7 +45,7 @@ function FormInput({type,name,className,style,value,icon:Icon,...props}:Props) {
           }}
           type={type}
           name={name}
-          className={` bg-[#0b0b0b] outline-none ${className}`}
+          className={` bg-[#131313] outline-none ${className}`}
           required
           {...props}
         />
