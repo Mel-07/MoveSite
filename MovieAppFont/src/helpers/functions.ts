@@ -147,6 +147,7 @@ const getPageNumberArray = (pageNumber:number):number[]=>{
 }
 
 
+
 export{
     checkMovieType,
     convertRating,
@@ -155,5 +156,5 @@ export{
     checkMedianType,
     calculateRuntime,
     limitNumberOfCast,
-    getPageNumberArray
+    getPageNumberArray,
 }

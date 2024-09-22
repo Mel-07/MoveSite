@@ -1,4 +1,4 @@
-import React, { CSSProperties, HTMLAttributes } from 'react'
+import  { CSSProperties, HTMLAttributes } from 'react'
 import { IconType } from 'react-icons';
 
 interface Props extends HTMLAttributes<HTMLInputElement> {

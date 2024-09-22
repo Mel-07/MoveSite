@@ -4,7 +4,7 @@ import { FaUser, FaPen, FaLock } from "react-icons/fa6";
 import { SiGmail } from "react-icons/si";
 // import profileImage from '../../assets/images/man-profile.jpg'
 import userImageFallback from '../../assets/images/user.svg'
-import { ChangeEvent, MouseEventHandler, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import {FormDataProfile} from '../../Types/fromType'
 import './from.scss'
 import { checkFileSize, validateEmail, validatePassWord, validateUserName } from "../../helpers/vaildators";
@@ -16,7 +16,7 @@ function Form() {
         email:'',
         password:''
     })
-    const [profile,setProfile] = useState<string|null|(()=>string)>(null)
+    const [profile,setProfile] = useState<string|null>(null)
 
     const handleFromData = (e:ChangeEvent<HTMLInputElement>)=>{
 
