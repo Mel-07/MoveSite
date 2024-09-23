@@ -10,6 +10,7 @@ import { Navigation, FreeMode } from "swiper/modules";
 import './trending.scss'
 import "react-loading-skeleton/dist/skeleton.css";
 import { checkMovieType } from "../../helpers/functions";
+import BookmarkIcon from "../Shared/components/BookmarkIcon";
 
 
 interface TrendingProps {
@@ -47,6 +48,7 @@ function Trending({trending}:TrendingProps) {
                   <TitlePoster title={true} items={items} />
                 </Link>
                 <Rating rate={items.vote_average}/>
+                <BookmarkIcon/>
               </SwiperSlide>
             ))
           : Array.from({ length: 12}).map((_, i) => (

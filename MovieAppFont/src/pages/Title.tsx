@@ -47,7 +47,7 @@ function Title() {
         <Cast casts={limitNumberOfCast(details?.credits?.cast)} />
         {details?.recommendations?.results.length > 0 && (
           <Parts
-          rating={true}
+          rating={false}
           part="Similar"
             items={details?.recommendations?.results || []}
           />
@@ -55,7 +55,7 @@ function Title() {
         {details?.similar?.results.length > 0 && (
           <Parts 
           median_type={type as string} 
-          rating={true} part="Recommend" 
+          rating={false} part="Recommend" 
           items={details?.similar?.results || []} 
           />
         )}

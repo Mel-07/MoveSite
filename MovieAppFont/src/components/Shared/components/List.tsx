@@ -3,6 +3,7 @@ import TitlePoster from "../../Title/TitlePoster";
 import { TmdbMovie, TmdbSeries, } from "../../../Types/apptypes";
 import Rating from "./Rating";
 import backUpBg from '../../../assets/images/movie-background-collage.jpg'
+import BookmarkIcon from "./BookmarkIcon";
 interface Props {
   to: string;
   item: TmdbMovie | TmdbSeries ;
@@ -20,6 +21,7 @@ function List({to,item,rating}:Props){
       <TitlePoster title={true} font_size={['1.1rem','.9rem','1rem','1rem']} items={item}/>
       </Link>
       {rating && <Rating rate={item.vote_average}/>}
+      <BookmarkIcon/>
     </li>
   );
 }

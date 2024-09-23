@@ -5,13 +5,14 @@ import {
 
 } from "../../Types/apptypes";
 interface Props {
-  items: TmdbMovie_TmdbSeries
+  items: TmdbMovie_TmdbSeries;
+  rating?: boolean;
 }
-function Recommend({ items }: Props){
+function Recommend({ items,rating=false }: Props){
   return (
     <section>
       <H1 fontSize="2rem" text="Recommended" fontFamily="font-big_Shoulders" />
-      <Grid items={items} />
+      <Grid rating={rating} items={items} />
     </section>
   );
 }

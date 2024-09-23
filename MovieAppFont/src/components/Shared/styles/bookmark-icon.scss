@@ -1,0 +1,21 @@
+$secondary-bg :#0b0b0b;
+$main-bg:#ff4400a1;
+.bookmark-icon-container{
+    position: absolute;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-content: center;
+    padding: .5rem;
+    cursor: pointer;
+    top: 6px;
+    color: $secondary-bg;
+    right: 6px ;
+    background-color: lighten($color: $main-bg, $amount: 20%);
+    transition: background-color 200ms ease-in-out;
+
+    &:hover{
+        background-color: $main-bg;
+    }
+}
