@@ -17,8 +17,6 @@ async function sequelizeCall(){
     try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
-    await sequelize.sync()
-    console.log('Table (user) has been created')
     } catch (error) {
         
     }

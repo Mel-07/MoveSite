@@ -21,6 +21,20 @@ const Users = sequelize.define("users", {
   },
 });
 
-  Users.sync({ force: true })
+ async function sync(){
 
-module.exports=Users
+    try {
+
+        await Users.sync();
+
+        console.log("table synced")
+        
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+module.exports = {
+  Users,
+  sync
+};
