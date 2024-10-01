@@ -1,0 +1,25 @@
+{
+  "name": "movie_backend",
+  "version": "1.0.0",
+  "description": "A backend for the movie site",
+  "main": "Index.js",
+  "scripts": {
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Movesite"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
+    "express": "^4.21.0",
+    "mysql2": "^3.11.3",
+    "nodemon": "^3.1.7",
+    "sequelize": "^6.37.3"
+  }
+}

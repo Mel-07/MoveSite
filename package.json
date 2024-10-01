@@ -1,0 +1,16 @@
+{
+  "name": "movieapp",
+  "version": "1.0.0",
+  "main": "index.js",
+"scripts": {
+  "install": "npm install --prefix Movie_backend",
+  "client": "npm run dev --prefix MovieAppFont",
+  "server": "npm run watch --prefix Movie_backend", 
+  "watch": "npm run client & npm run server",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
