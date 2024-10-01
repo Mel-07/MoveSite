@@ -1,6 +1,6 @@
 interface FormDataProfile {
   image:string|null
-  name: string;
+  userName: string;
   email: string;
   password: string;
 }

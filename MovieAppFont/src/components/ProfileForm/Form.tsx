@@ -8,12 +8,13 @@ import { ChangeEvent, useState } from "react";
 import {FormDataProfile} from '../../Types/fromType'
 import './from.scss'
 import '../Shared/styles/from-error.scss'
+import { useFetch } from "../../utils/useFetch";
 import { checkFileSize, validateEmail, validatePassWord, validateUserName } from "../../helpers/vaildators";
 
 function Form() {
     const [formData,setFormData] = useState<FormDataProfile>({
         image:null,
-        name:'',
+        userName:'',
         email:'',
         password:''
     })
@@ -24,12 +25,15 @@ function Form() {
         password:false
     })
     const [profile,setProfile] = useState<string|null>(null)
+    const [profileApi] = useState(["http://localhost:8000/profile"]);
+    const  get = useFetch(profileApi)
+    console.log(get)
 
     const handleFromData = (e:ChangeEvent<HTMLInputElement>)=>{
 
         const {name,value} = e.target
         switch (name) {
-          case "name":{
+          case "userName":{
             setFormData((prev) => ({ ...prev, [name]: value }));
               if (validateUserName(value)) {
                 setFormError((prev) => ({ ...prev, name: false }));
@@ -67,11 +71,29 @@ function Form() {
     const handlePost = () => {
 
       if (
-        validateUserName(formData.name) &&
+        validateUserName(formData.userName) &&
         validateEmail(formData.email) &&
         validatePassWord(formData.password)
       ) {
-        console.log("Run Post");
+       async function postToProfile(){
+
+        try {
+            const res = await fetch('http://localhost:8000/profile',{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(formData)
+            })
+
+            const data = await res.json()
+
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+       }
+       postToProfile()
       }
       else{
             if (validatePassWord(formData.password)) {
@@ -84,7 +106,7 @@ function Form() {
             } else {
             setFormError((prev) => ({ ...prev, email: true }));
             }
-            if (validateUserName(formData.name)) {
+            if (validateUserName(formData.userName)) {
             setFormError((prev) => ({ ...prev, name: false }));
             } else {
             setFormError((prev) => ({ ...prev, name: true }));
@@ -131,7 +153,6 @@ function Form() {
         });
     }
     console.log(formError);
-    console.log(formData)
   return (
     <div className=" min-h-full px-4 form-container">
       <div>
@@ -161,10 +182,10 @@ function Form() {
           <div>
             <FormInput
               onChange={handleFromData}
-              value={formData.name}
+              value={formData.userName}
               icon={FaUser}
               type="text"
-              name="name"
+              name="userName"
             />
             <FormInput
               onChange={handleFromData}
