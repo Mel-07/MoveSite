@@ -25,7 +25,7 @@ const Users = sequelize.define("users", {
 
     try {
 
-        await Users.sync();
+        await sequelize.sync();
 
         console.log("table synced")
         

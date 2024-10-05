@@ -131,7 +131,6 @@ function Form() {
 
     const readImageFile =async (reader:FileReader,file?:File)=>{
         if(!file)return
-
         reader.readAsDataURL(file);
         reader.addEventListener("load", () => {
             const result = reader.result; 
@@ -143,7 +142,7 @@ function Form() {
                     operator: "<",
                   })
                 ){
-                    setProfile(result as string); 
+                    setProfile(result?.toString()); 
                     setFormError((prev)=>({...prev,image:false}))
                 }else{
                     setFormError((prev) => ({ ...prev, image: true }));
