@@ -21,7 +21,7 @@ function List({to,item,rating}:Props){
       <TitlePoster title={true} font_size={['1.1rem','.9rem','1rem','1rem']} items={item}/>
       </Link>
       {rating && <Rating rate={item.vote_average}/>}
-      <BookmarkIcon/>
+      <BookmarkIcon item={item}/>
     </li>
   );
 }

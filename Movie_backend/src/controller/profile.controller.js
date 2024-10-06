@@ -1,9 +1,12 @@
 const validate = require('../utility')
 const {Users} = require('../model/users.model')
 
-function getProfile(req,res){
-
-return res.status(200).json(newUser)
+async function getProfile(req,res){
+    try {
+        Users.findOne()
+    } catch (error) {
+        
+    }
 }
 
 async function updateProfile(req,res){

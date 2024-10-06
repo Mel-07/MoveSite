@@ -6,27 +6,31 @@ const {
   updateProfile,
   loginUser,
   createUser,
+  addOrRemoveBookmark
 } = require("./controller");
 const {userName,email,password} = require('./utility')
 
 app.use(express.json())
-app.use(cors({
-    origin:'http://localhost:5173'
-}))
-app.use((req,res,next)=>{
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+  })
+);
+// app.use((req,res,next)=>{
 
-    if(email(req.body.email) === false||userName(req.body.userName)===false||password(req.body.password)=== false){
-       return res.status(400).json({
-            error:"Invalid Data"
-        })
-    }
+//     if(email(req.body.email) === false||userName(req.body.userName)===false||password(req.body.password)=== false){
+//        return res.status(400).json({
+//             error:"Invalid Data"
+//         })
+//     }
 
-    next()
-})
+//     next()
+// })
 app.post('/login',loginUser)
 app.post("/sign-in", createUser);
 app.get('/profile',getProfile)
 app.post("/profile", updateProfile);
+app.post("/bookmark",addOrRemoveBookmark)
 
 
 module.exports =app

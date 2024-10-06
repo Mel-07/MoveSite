@@ -1,10 +1,8 @@
 const port = 8000
 const http = require(`http`)
 const app = require('./src/app')
-const os = require("os");
-const {sequelize,sequelizeCall} = require('./src/model/db')
-const { sync } = require("./src/model/users.model");
-const cluster = require("cluster");
+const {sequelizeCall} = require('./src/model/db')
+const sync = require("./src/model/sync");
 
 
 
@@ -14,7 +12,7 @@ async function startSever(){
   try {
 
     await sequelizeCall()
-    await sync()
+    await sync({ force: true });
 
     const server = http.createServer(app);
     server.listen(port, () => {

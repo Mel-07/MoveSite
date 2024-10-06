@@ -48,7 +48,7 @@ function Trending({trending}:TrendingProps) {
                   <TitlePoster title={true} items={items} />
                 </Link>
                 <Rating rate={items.vote_average}/>
-                <BookmarkIcon/>
+                <BookmarkIcon item={items}/>
               </SwiperSlide>
             ))
           : Array.from({ length: 12}).map((_, i) => (
