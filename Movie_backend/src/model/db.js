@@ -1,9 +1,10 @@
+const { config } = require("dotenv");
 const { Sequelize, DataTypes } = require("sequelize");
-
+require("dotenv").config()
 
 const sequelize = new Sequelize(
-  "movie",
-  "nuel",
+  process.env.DATABASE,
+  process.env.USER_NAME,
   "Nuel@090#",
   {
     host: "localhost",

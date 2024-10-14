@@ -1,15 +1,15 @@
 const { Users } = require("../model/users.model");
 async function createUser(req,res){
-    const {image,userName,email,password} = req.body
+    const {userName,email,password} = req.body
 
     try {
     const createNewUser = await Users.create({
-        image,
         userName,
         email,
         password,
     });
-    return res.status(200).json(createNewUser);
+    
+    return res.status(201).json(createNewUser);
     } catch (err) {
 
         if (err.name === "SequelizeUniqueConstraintError") {

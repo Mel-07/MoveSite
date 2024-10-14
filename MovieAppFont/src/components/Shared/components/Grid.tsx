@@ -17,7 +17,7 @@ function Grid({ items,rating=true,median_type }: Props) {
               rating={rating}
               item={item}
               key={item.id}
-              to={`/title?id=${item.id}&type=${
+              to={`/app/title?id=${item.id}&type=${
                 median_type ? median_type : item.media_type
               }`}
             />

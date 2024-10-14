@@ -1,3 +1,4 @@
+const { Bookmark } = require('./bookmark.model');
 const {sequelize,DataTypes} = require('./db')
 
 const Users = sequelize.define("users", {
@@ -21,7 +22,7 @@ const Users = sequelize.define("users", {
   },
 });
 
-
+Users.hasMany(Bookmark)
 module.exports = {
   Users,
 };

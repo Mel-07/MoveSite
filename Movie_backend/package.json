@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "watch": " nodemon server.js",
-    "kill":"pm2 kill",
+    "kill": "pm2 kill",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,11 +16,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "connect-ensure-login": "^0.1.1",
     "cors": "^2.8.5",
     "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "mysql2": "^3.11.3",
     "nodemon": "^3.1.7",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
     "pm2": "^5.4.2",
     "sequelize": "^6.37.3"
   }

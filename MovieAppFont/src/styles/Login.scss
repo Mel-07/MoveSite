@@ -1,0 +1,41 @@
+$bg:#ff4500;
+.login-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100dvh;
+    min-height: 100vh;
+    min-width: 100%;
+}
+
+.login-movie-form-panel{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    // background-blend-mode:multiply;
+    background-color: $bg;
+}
+.login-movie-form-panel-login-wallpaper{
+    background-image: url('../assets/images/login-page-wallpaper.jpg');
+}
+.login-movie-form-panel-create-account-wallpaper{
+     background-image: url('../assets/images/deadpool.jpg');
+}
+.login-create-from-container{
+    display: grid;
+    place-content: center;
+    grid-template-columns: minmax(10rem,30rem);
+    grid-template-rows: max-content max-content;
+    min-width:100%;
+    min-height: 100%;
+         backdrop-filter: blur(.5px); 
+  -webkit-backdrop-filter: blur(.5px);
+}
+.show-container-logo{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    h1{
+        font-size: 1.5rem;
+    }
+}

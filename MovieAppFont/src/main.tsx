@@ -9,10 +9,15 @@ import TopRated from './pages/TopRated.tsx'
 import BookMark from './pages/BookMark.tsx'
 import Title from './pages/Title.tsx'
 import Profile from './pages/Profile.tsx'
+import Login from './pages/Login.tsx'
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    index:true,
+    element: <Login />,
+  },
+  {
+    path: "/app",
     element: <App />,
     // errorElement:<ErrorPage/>,
     children: [
@@ -21,25 +26,25 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path:'/top-rated',
-        element:<TopRated/>
+        path: "/app/top-rated",
+        element: <TopRated />,
       },
       {
-        path:'/bookmark',
-        element:<BookMark/>
+        path: "/app/bookmark",
+        element: <BookMark />,
       },
       {
-        path:'/title',
-        element:<Title/>
+        path: "/app/title",
+        element: <Title />,
       },
       {
-        path:'/profile',
-        element:<Profile/>
+        path: "/app/profile",
+        element: <Profile />,
       },
       {
-        path:'*',
-        errorElement:<ErrorPage/>
-      }
+        path: "*",
+        errorElement: <ErrorPage />,
+      },
     ],
   },
 ]);

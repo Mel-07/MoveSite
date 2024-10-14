@@ -38,20 +38,25 @@ function Trending({trending}:TrendingProps) {
                 key={items.id}
                 className="poster-aspect-ratio  poster"
                 style={{
-                  backgroundImage: items.poster_path ? `url(https://image.tmdb.org/t/p/w342/${items.poster_path})`:`url(${trendinBackUpBg})`,
-                  backgroundSize: !items.poster_path ? '150%': ''
+                  backgroundImage: items.poster_path
+                    ? `url(https://image.tmdb.org/t/p/w342/${items.poster_path})`
+                    : `url(${trendinBackUpBg})`,
+                  backgroundSize: !items.poster_path ? "150%" : "",
                 }}
               >
-                <Link 
-                className="poster-link" 
-                to={`/title?id=${items.id}&type=${checkMovieType(items)?.split(" ")[0].toLowerCase()}`}>
+                <Link
+                  className="poster-link"
+                  to={`/app/title?id=${items.id}&type=${checkMovieType(items)
+                    ?.split(" ")[0]
+                    .toLowerCase()}`}
+                >
                   <TitlePoster title={true} items={items} />
                 </Link>
-                <Rating rate={items.vote_average}/>
-                <BookmarkIcon item={items}/>
+                <Rating rate={items.vote_average} />
+                <BookmarkIcon item={items} />
               </SwiperSlide>
             ))
-          : Array.from({ length: 12}).map((_, i) => (
+          : Array.from({ length: 12 }).map((_, i) => (
               <SwiperSlide key={i} className="poster-aspect-ratio " tag="li">
                 <Skeleton
                   key={i}

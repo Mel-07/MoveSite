@@ -145,7 +145,23 @@ const newCast =
 const getPageNumberArray = (pageNumber:number):number[]=>{
   return Array.from({ length: pageNumber }).map((_, i) => i+1);
 }
+/* create a compare function to check if the value of the password is same as that of the confirm pass word */
+type Password = string;
+type ConfirmPassword = string;
+const comparePassword = (password:Password,confirmPassword:ConfirmPassword) =>{
+  let check;
+  if(password === confirmPassword){
+    check = true
+  }else{
+    check = false
+  }
 
+  if(check === undefined){
+    check = false
+  }
+
+  return check
+}
 
 
 export{
@@ -157,4 +173,5 @@ export{
     calculateRuntime,
     limitNumberOfCast,
     getPageNumberArray,
+    comparePassword
 }

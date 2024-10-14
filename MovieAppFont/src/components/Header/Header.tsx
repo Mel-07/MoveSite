@@ -32,14 +32,14 @@ function Header() {
   return (
     <header className="header-container">
       <nav className="nav-container">
-        <Link to={"/"}>
+        <Link to={"/app"}>
           <img src={MovieLogo} width={"100%"} alt="" />
         </Link>
         <ul className="nav-lists">
           <li title="Home">
             <NavLink
               className={({ isActive }) => (isActive ? "text-[#0b0b0b]" : "")}
-              to={"/"}
+              to={"/app"}
             >
               <FaHouseChimney />
             </NavLink>
@@ -47,7 +47,7 @@ function Header() {
           <li title="Top-rated">
             <NavLink
               className={({ isActive }) => (isActive ? "text-[#0b0b0b]" : "")}
-              to={"/top-rated"}
+              to={"/app/top-rated"}
             >
               <FaGripfire />
             </NavLink>
@@ -55,7 +55,7 @@ function Header() {
           <li title="Bookmark">
             <NavLink
               className={({ isActive }) => (isActive ? "text-[#0b0b0b]" : "")}
-              to={"/bookmark"}
+              to={"/app/bookmark"}
             >
               <FaBookmark />
             </NavLink>
@@ -63,7 +63,7 @@ function Header() {
           <li title="Title">
             <NavLink
               className={({ isActive }) => (isActive ? "text-[#0b0b0b]" : "")}
-              to={`/title?id=${idType}&type=${movieType}`}
+              to={`/app/title?id=${idType}&type=${movieType}`}
             >
               <FaDiceSix />
             </NavLink>
@@ -72,7 +72,7 @@ function Header() {
 
         <ul className=" nav-lists">
           <li title="Profile">
-            <Link to={"/profile"}>
+            <Link to={"/app/profile"}>
               <img src={profileImage} alt="" />
             </Link>
           </li>
