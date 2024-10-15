@@ -50,6 +50,10 @@ $color-two:#ff4500;
     &:hover{
         background-color: $color-two;
     }
+    &:disabled{
+        background-color: darken($color: $color-two, $amount: 30%);
+        color: darken($color: $color-two, $amount: 25%);
+    }
 }
 .create-account-login-btn{
     color:$color-two;

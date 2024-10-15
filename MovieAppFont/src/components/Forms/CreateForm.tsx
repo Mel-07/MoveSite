@@ -1,10 +1,12 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import Form from "./Form";
 import "./Styles/form-styles.scss";
 import { FaRegEye } from "react-icons/fa";
 import { PiEyeClosedThin } from "react-icons/pi";
-import { FormDetailsCreateForm } from "../../Types/fromType";
+import { FormDetailsCreateForm, FormValidate } from "../../Types/fromType";
 import { comparePassword } from "../../helpers/functions";
+import { validateEmail, validatePassWord, validateUserName } from "../../helpers/vaildators";
+import { useNavigate } from "react-router-dom";
 interface Props {
   setFormType: Dispatch<SetStateAction<boolean>>;
 }
@@ -14,11 +16,19 @@ function CreateForm({setFormType}:Props) {
   const [confirmPasswordVisible, setConfirmPassWordVisibility] =
     useState<boolean>(true);
   const [formDetails,setFormDetails] = useState<FormDetailsCreateForm>({
-    username:'',
-    email:'',
-    password:'',
-    confirm_password:''
+    username:"",
+    email:"",
+    password:"",
+    confirm_password:""
   })
+    const [formValidate, setFormValidate] = useState<FormValidate>({
+      username: false,
+      email: false,
+      password: false,
+      confirm_password: false,
+    });
+  const [disableButton,setDisableButton] = useState<boolean>(true)
+  const navigate = useNavigate();
 
   /**
    *username,email,password,check password button -> create account **/
@@ -37,75 +47,84 @@ function CreateForm({setFormType}:Props) {
   function showConfirmPassword() {
     setConfirmPassWordVisibility(!confirmPasswordVisible);
   }
-  /* function for getting the form details and setting it to an object */
+
+  useEffect(()=>{
+      function checkValidation() {
+        const isValid = Object.keys(formValidate).every(
+          (key) => formValidate[key] === true
+        );
+
+        setDisableButton(!isValid)
+      }
+    checkValidation()
+  },[formValidate])
+  /* function for getting the form details and setting it to an object and for validation */
   function processFromDetails(e:ChangeEvent<HTMLInputElement>){
     const {name,value} = e.target
+    setFormDetails((prev) => {
+        return { ...prev, [name]: value.trim() };
+    });
 
-    switch (name) {
-      case "username":
-        {
-          setFormDetails((prev)=>{
-            return{...prev,[name]:value}
-          })
-        }
-        break;
-      case "email":
-        {
-            setFormDetails((prev) => {
-              return { ...prev, [name]: value };
-            });
-        }
-        break;
-      case "password":
-        {
-          setFormDetails((prev) => {
-            return { ...prev, [name]: value };
-          });
-        if (!comparePassword(value,formDetails.confirm_password)) {
-                    console.log("password are not the same");
-        }
-        }
-        break;
-      case "confirm_password":
-        {
-        setFormDetails((prev) => {
-        return { ...prev, [name]: value };
-        });
-        if(!comparePassword(formDetails.password,value)){
-            console.log('password are not the same')
-        }
-        }
-        break;
+    const valid = validity(name,value)
 
-      default:
-        break;
-    }
+    setFormValidate((prev) => {
+      return {
+        ...prev,[name]:valid
+      };
+    });
   }
+
+  function validity(name:string,value:string){
+        switch (name) {
+          case "username":
+            return validateUserName(value);
+          case "email":
+            return validateEmail(value);
+          case "password":
+            return validatePassWord(value);
+          case "confirm_password":
+            return (
+              validatePassWord(value) &&
+              comparePassword(value, formDetails.password)
+            );
+          default:
+            return false;
+        }
+  }
+
   /* create post function */
   async function handleUser(){
 
-    
     try {
-        const res = await fetch("http://localhost:8000/sign-in",{
-            method:'POST',
+        const res = await fetch('http://localhost:8000/sign-in',{
+            method:"POST",
             headers:{
-                'Content-Type':"application/json"
+                "Content-Type":"application/json"
             },
             body:JSON.stringify({
                 userName:formDetails.username,
                 email:formDetails.email,
-                password:formDetails.password
+                password:formDetails.username
             })
         });
+        if (!res.ok) {
+            throw new Error("Request Failed");
+        }
 
-        const data = await res.json()
-
+        const data = await res.json();
         console.log(data)
-    } catch (error ) {
-        /* handle error */
-        console.log(error)
+        if(data){
+            navigate('/app')
+        }
+    } catch (error) {
+        const err = error as Error;
+        console.log(err.message)
     }
   }
+
+  /* TODO
+  *Work on the post
+  */
   return (
     <Form>
       <div className=" field-container">
@@ -114,7 +133,8 @@ function CreateForm({setFormType}:Props) {
           type="text"
           name="username"
           id="username"
-          required={true}
+          value={formDetails.username}
+          required
           onChange={processFromDetails}
         />
       </div>
@@ -124,7 +144,8 @@ function CreateForm({setFormType}:Props) {
           type="email"
           name="email"
           id="email"
-          required={true}
+          value={formDetails.email}
+          required
           onChange={processFromDetails}
         />
       </div>
@@ -134,7 +155,8 @@ function CreateForm({setFormType}:Props) {
           type={passwordVisible ? "password" : "text"}
           name="password"
           id="password"
-          required={true}
+          value= {formDetails.password}
+          required
           onChange={processFromDetails}
         />
         {passwordVisible ? (
@@ -149,7 +171,8 @@ function CreateForm({setFormType}:Props) {
           type={confirmPasswordVisible ? "password" : "text"}
           name="confirm_password"
           id="confirm-password"
-          required={true}
+          value={formDetails.confirm_password}
+          required
           onChange={processFromDetails}
         />
         {confirmPasswordVisible ? (
@@ -163,8 +186,8 @@ function CreateForm({setFormType}:Props) {
           <span>Click </span>to Login if you Already have an Account
         </button>
       </div>
-      <button onClick={handleUser} className="login-btn" type="button">
-        Login
+      <button onClick={handleUser} disabled={disableButton} className="login-btn" type="button">
+        Create Account
       </button>
     </Form>
   );

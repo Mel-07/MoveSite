@@ -146,10 +146,13 @@ const getPageNumberArray = (pageNumber:number):number[]=>{
   return Array.from({ length: pageNumber }).map((_, i) => i+1);
 }
 /* create a compare function to check if the value of the password is same as that of the confirm pass word */
-type Password = string;
-type ConfirmPassword = string;
+type Password = string|null;
+type ConfirmPassword = string|null;
 const comparePassword = (password:Password,confirmPassword:ConfirmPassword) =>{
   let check;
+  if(password === null || confirmPassword === null){
+    check = false
+  }
   if(password === confirmPassword){
     check = true
   }else{
