@@ -13,14 +13,26 @@ interface FormDetailsCreateForm {
   [key: string] :string
 }
 interface FormValidate {
-  username: boolean;
-  email: boolean;
-  password: boolean;
-  confirm_password: boolean;
-  [key: string]: boolean;
+  username: boolean|null;
+  email: boolean|null;
+  password: boolean|null;
+  confirm_password: boolean|null;
+  [key: string]: boolean|null;
+}
+interface FormValidateLogin {
+  username: boolean | null;
+  password: boolean | null;
+  [key: string]: boolean | null;
+}
+interface FormDetailsLoginForm {
+  username: string;
+  password: string;
+  [key: string]: string;
 }
 export type{
     FormDataProfile,
     FormDetailsCreateForm,
-    FormValidate
+    FormValidate,
+    FormDetailsLoginForm,
+    FormValidateLogin
 }

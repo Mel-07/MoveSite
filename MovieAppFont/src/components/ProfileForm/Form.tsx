@@ -207,6 +207,7 @@ function Form() {
               title="Rest"
             />
           </div>
+          
           <ul className="from-error-container">
             {formError.name && (
               <li>
