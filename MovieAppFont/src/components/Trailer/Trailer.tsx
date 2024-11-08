@@ -1,4 +1,4 @@
-import { TmdbMovie_TmdbSeries } from "../../Types/apptypes"
+import { TmdbMovieUpcoming } from "../../Types/apptypes";
 import H1 from "../Heading/H1";
 import Skeleton from "react-loading-skeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,7 +8,7 @@ import './trailer.scss'
 import { checkMovieType, getFullDate } from "../../helpers/functions";
 
 interface Props {
-    upcoming:TmdbMovie_TmdbSeries
+  upcoming: TmdbMovieUpcoming[];
 }
 
 function Trailer({upcoming}:Props) {

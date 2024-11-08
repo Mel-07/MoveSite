@@ -2,13 +2,19 @@ import Skeleton from "react-loading-skeleton";
 import CustomElement from "./CustomElement";
 import List from "./List";
 import "../styles/grid.scss";
-import { TmdbMovie_TmdbSeries} from "../../../Types/apptypes";
+import {
+  TmdbMovie_TmdbSeries,
+  TopRatedMovies,
+  TopRatedSeries,
+  TmdbMovie,
+} from "../../../Types/apptypes";
 interface Props {
-  items: TmdbMovie_TmdbSeries;
-  rating?: boolean,
-  median_type?:string
+  items: TmdbMovie_TmdbSeries | TopRatedMovies[] | TopRatedSeries[];
+  rating?: boolean;
+  median_type?: string;
+  bookmark?: TmdbMovie[] | [];
 }
-function Grid({ items,rating=true,median_type }: Props) {
+function Grid({ items,rating=true,median_type,bookmark }: Props) {
   return (
     <CustomElement className="grid-container" tag="ul">
       {items.length > 0
@@ -18,8 +24,9 @@ function Grid({ items,rating=true,median_type }: Props) {
               item={item}
               key={item.id}
               to={`/app/title?id=${item.id}&type=${
-                median_type ? median_type : item.media_type
+                median_type ? median_type : 'media_type' in item && item.media_type
               }`}
+              bookmark={bookmark}
             />
           ))
         : Array.from({ length: 14 }).map((_, i) => (

@@ -2,51 +2,63 @@ const express = require('express')
 const passport = require("passport");
 const app = express();
 const cors = require('cors')
-const cookieSession = require("cookie-session")
+const { v4: uuidv4 } = require("uuid");
+const session = require("express-session")
 const {
   getProfile,
   updateProfile,
   createUser,
   addOrRemoveBookmark,
-  loginUser,
+  // loginUser,
   getLoginFrom,
-  staticServer
+  staticServer,
+  getBookmark
 } = require("./controller");
-const LocalStrategy = require("passport-local").Strategy;
+const { Strategy } = require("passport-local");
 const {Users} = require('./model/users.model')
 const path = require('path');
 require('dotenv').config()
-
+const {scryptSync}= require('crypto')
 
 app.use(express.json())
 app.use(
   cors({
     origin: ["http://localhost:5173", "http://localhost:5174"],
+    credentials: true, 
   })
 );
 app.use(
-  cookieSession({
-    name: "session",
-    keys: [process.env.COOKIES_KEY_ONE, process.env.COOKIES_KEY_ONE],
-    maxAge: 24 * 60 * 60 * 1000,
+  session({
+    secret: process.env.COOKIES_KEY_TWO,
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+      maxAge: 2 * 60 * 60 * 1000,
+      path: "/",
+      secure: false,
+      sameSite:'lax'
+    },
+    genid: function () {
+      return uuidv4();
+    },
   })
 );
 /**
  * initialize passport
  * initialize session**/
 app.use(passport.initialize());
-app.use(passport.session())
+app.use(passport.session());
 
 passport.use(
-  new LocalStrategy(
+  new Strategy(
     {
       usernameField: "userName",
-      passwordField: "password",
+      passwordField:"password"
     },
-    async (userName, password, done) => {
+    async (username, password, done) => {
       try {
         const user = await Users.findOne({
-          where: { userName, },
+          where: { username, },
         });
 
         if (!user) {
@@ -54,7 +66,13 @@ passport.use(
             message: "Incorrect username.",
           });
         }
-        const passWord = user.password === password
+
+        
+        const salt = user.password.split(":")?.[0];
+        const hash = user.password.split(":")?.[1];
+        const derivedKey = scryptSync(password,salt,64).toString('hex')
+        const passWord = derivedKey === hash;
+
         if(!passWord){
             return done(null,false,{
                 message:"Incorrect password."
@@ -68,24 +86,12 @@ passport.use(
   )
 );
 
-app.use(function (req,_, next) {
-  if (req.session && !req.session.regenerate) {
-    req.session.regenerate = (done) => {
-      done();
-    };
-  }
-  if (req.session && !req.session.save) {
-    req.session.save = (done) => {
-      done();
-    };
-  }
-  next();
-});
+
 passport.serializeUser(function (user, done) {
   process.nextTick(function () {
     return done(null, {
       id: user.id,
-      username: user.userName,
+      userName:user.userName
     });
   });
 });
@@ -95,28 +101,47 @@ passport.deserializeUser(function (user, done) {
     return done(null, user);
   });
 });
+
+/**
+ * LOGIN
+ */
+app.post("/", (req, res, next) => {
+  passport.authenticate("local",{session:true,}, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      return res.status(200).json({ redirect: "/app" });
+    });
+  })(req, res, next);
+});
+app.post("/sign-in", createUser);
+app.get("/", getLoginFrom);
 function isAuthenticated(req, res, next) {
+  console.log(req.isAuthenticated(), "check");
   if (req.isAuthenticated()) {
     return next();
   }
- res.redirect('/');
+  return res.status(401).json({
+    message: "Unauthorized",
+    success: false,
+  });
 }
 /**
  * get the folder PATH were the build front end files are **/
 app.use(express.static(path.join(__dirname, "..", "Public", "dist")));
-
-app.get("/app/*", isAuthenticated, staticServer);
-app.post("app/bookmark", isAuthenticated, addOrRemoveBookmark);
-app.get("/title", isAuthenticated, staticServer);
-app.get("/top-rated", isAuthenticated, staticServer);
-app.get("/", getLoginFrom);
-app.post("/",passport.authenticate("local", { failureRedirect: "/",
-  successRedirect:"/app"
- }),
-);
-app.post("/sign-in", createUser);
-app.get('/profile',isAuthenticated,getProfile)
-app.post("/profile",isAuthenticated, updateProfile);
+app.post("/bookmark",isAuthenticated,addOrRemoveBookmark);
+app.get("/bookmarks",isAuthenticated,getBookmark);
+app.get("/profile", isAuthenticated, getProfile);
+app.post("/profile", isAuthenticated, updateProfile);
+/* served files should be the last  */
+app.get("/*", isAuthenticated, staticServer);
 
 
 module.exports =app

@@ -23,7 +23,14 @@ interface TmdbSeries {
   vote_average: number;
   vote_count: number;
 };
+// trending 
 
+interface Trending{
+  page:number,
+  results:TmdbMovie_TmdbSeries,
+  total_pages:number,
+  total_results:number
+}
 // movieList
 
 interface TmdbMoviesListResponse {
@@ -37,7 +44,7 @@ interface TmdbMovie {
   backdrop_path: string|null;
   genre_ids: number[];
   id: number;
-  media_type: string;
+  media_type: string|null;
   original_language: string;
   original_title: string;
   overview: string;
@@ -55,26 +62,71 @@ interface TmdbMovie {
 interface TmdbUpcoming {
   dates: DatesUpcoming;
   page: number;
-  results: (TmdbMovie | TmdbSeries)[];
+  results: TmdbMovieUpcoming[];
   total_pages: number;
   total_results: number;
 }
-// interface TmdbMovieUpcoming {
-//   adult: boolean;
-//   backdrop_path: string;
-//   genre_ids: number[];
-//   id: number;
-//   original_language: string;
-//   original_title: string;
-//   overview: string;
-//   popularity: number;
-//   poster_path: string;
-//   release_date: string;
-//   title: string;
-//   video: boolean;
-//   vote_average: number;
-//   vote_count: number;
-// }
+interface TmdbMovieUpcoming {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+/* Top rated */
+interface TmdbTopRatedMovie {
+  page: number;
+  results: TopRatedMovies[];
+  total_pages: number;
+  total_results: number;
+}
+interface TopRatedMovies {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+interface TmdbTopRatedSeries {
+  page: number;
+  results: TopRatedSeries[];
+  total_pages: number;
+  total_results: number;
+}
+interface TopRatedSeries {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  first_air_date: string;
+  name: string;
+  vote_average: number;
+  vote_count: number;
+}
 interface DatesUpcoming{
   maximum: string; 
   minimum: string;
@@ -327,20 +379,52 @@ interface SearchType {
     total_results: number;
 };
 
-export type {
-    TmdbMovie,
-    TmdbMoviesListResponse,
-    TmdbSeries,
-    TmdbSeriesListResponse,
-    TmdbUpcoming,
-    MedianItems,
-    TmdbMovie_TmdbSeries,
-    TmdbMovieDetail,
-    TmdbTVShowDetail,
-    TmdbTVShowAndMovieResponse,
-    Genre,
-    TVShowList,
-    MovieRecommendations,
-    Casts,
-    SearchType
+interface BookmarkList {
+  newBookmarkLists: Array<TmdbMovie>|[];
+  numberOfBookmark: number|null;
 }
+
+interface Profile{
+  image:string|null,
+  userName:string,
+  email:string,
+}
+type AllResults =
+  | TmdbMovie_TmdbSeries
+  | TmdbMovieUpcoming
+  | TopRatedSeries
+  | TopRatedMovies
+  | TmdbMovie
+  | TmdbSeries;
+interface State {
+  allResults: Array<AllResults> | [];
+  allBookmarks: Array<TmdbMovie> | [];
+}
+
+export type {
+  TmdbMovie,
+  TmdbMoviesListResponse,
+  TmdbSeries,
+  TmdbSeriesListResponse,
+  TmdbUpcoming,
+  TmdbMovieUpcoming,
+  MedianItems,
+  TmdbMovie_TmdbSeries,
+  TmdbMovieDetail,
+  TmdbTVShowDetail,
+  TmdbTVShowAndMovieResponse,
+  Genre,
+  TVShowList,
+  MovieRecommendations,
+  Casts,
+  SearchType,
+  Trending,
+  TmdbTopRatedMovie,
+  TmdbTopRatedSeries,
+  TopRatedSeries,
+  TopRatedMovies,
+  BookmarkList,
+  Profile,
+  State,
+  AllResults
+};

@@ -1,4 +1,4 @@
-import { TmdbMovie_TmdbSeries} from "../../Types/apptypes";
+import { TmdbMovie_TmdbSeries, TmdbMovie } from "../../Types/apptypes";
 import { Link } from "react-router-dom";
 import H1 from "../Heading/H1";
 import Skeleton from "react-loading-skeleton";
@@ -15,9 +15,10 @@ import BookmarkIcon from "../Shared/components/BookmarkIcon";
 
 interface TrendingProps {
   trending: TmdbMovie_TmdbSeries;
+  bookmark: TmdbMovie[]|[];
 }
 
-function Trending({trending}:TrendingProps) {
+function Trending({trending,bookmark}:TrendingProps) {
   return (
     <section className="trending-container">
       <H1 fontSize="2rem" text="Trending" fontFamily="font-big_Shoulders" />
@@ -53,7 +54,7 @@ function Trending({trending}:TrendingProps) {
                   <TitlePoster title={true} items={items} />
                 </Link>
                 <Rating rate={items.vote_average} />
-                <BookmarkIcon item={items} />
+                <BookmarkIcon item={items} booked={bookmark || []} />
               </SwiperSlide>
             ))
           : Array.from({ length: 12 }).map((_, i) => (

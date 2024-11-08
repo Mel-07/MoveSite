@@ -7,14 +7,16 @@ import ErrorFormContainer from '../Shared/components/ErrorFormContainer';
 import ErrorIndicate from '../Shared/components/ErrorIndicate';
 import { validatePassWord, validateUserName } from '../../helpers/vaildators';
 import { FormValidateLogin } from '../../Types/fromType';
+import { useNavigate } from 'react-router-dom';
 interface Props {
   setFormType: Dispatch<SetStateAction<boolean>>
 }
 function LoginForm({setFormType}:Props) {
+  const navigate = useNavigate()
 
   const [passwordVisible,setPassWordVisibility] = useState<boolean>(true)
   /* Username and password */
-  const [loginDetials, setLoginDetails] = useState({
+  const [loginDetails, setLoginDetails] = useState({
     username:'',
     password:''
   })
@@ -75,6 +77,45 @@ function LoginForm({setFormType}:Props) {
   function showPassword(){
     setPassWordVisibility(!passwordVisible)
   }
+
+  /**
+   * post function steps
+   * check if all validate state is true
+   * if it is not true then throw error as a second check --> check even when button is disable :) <--
+   */
+  async function loginAccount(){
+    try {
+      const valid = Object.keys(formValidate).every((key) => formValidate[key] === true);
+
+      if(valid){
+        const res = await fetch('http://localhost:8000/',{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          credentials:'include',
+          body:JSON.stringify({
+            userName:loginDetails.username,
+            password:loginDetails.password
+          })
+
+
+        })
+
+        const data = await res.json()
+          if(!res.ok){
+            throw new Error ("Account not found")
+          }else{
+            navigate(data?.redirect)
+          }
+      }else{
+        throw new Error('Form inputs invalid')
+      }
+    } catch (error) {
+      const err =  error as Error
+      console.error(err)
+    }
+  }
   return (
     <Form>
       <div className=" field-container">
@@ -85,7 +126,7 @@ function LoginForm({setFormType}:Props) {
           required
           placeholder="Username"
           onChange={handleInput}
-          value={loginDetials.username}
+          value={loginDetails.username}
         />
       </div>
       <div className=" field-container">
@@ -96,7 +137,7 @@ function LoginForm({setFormType}:Props) {
           required
           placeholder="Password"
           onChange={handleInput}
-          value={loginDetials.password}
+          value={loginDetails.password}
         />
         {passwordVisible ? (
           <PiEyeClosedThin onClick={showPassword} className="eye" />
@@ -109,7 +150,7 @@ function LoginForm({setFormType}:Props) {
           <span>Click </span>to Create Account
         </button>
       </div>
-      <button className="login-btn" type="button" disabled={disableBtn}>
+      <button onClick={loginAccount} className="login-btn" type="button" disabled={disableBtn}>
         Login
       </button>
       <ErrorFormContainer>

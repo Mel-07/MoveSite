@@ -3,7 +3,18 @@ const {Users} = require('../model/users.model')
 
 async function getProfile(req,res){
     try {
-        Users.findOne()
+        const user = await Users.findOne({ where:req?.user?.id})
+
+        if(user){
+          res.status(200).json({
+            ...user
+          })
+        }else{
+          res.status(200).json({
+            user:false
+          })
+        }
+
     } catch (error) {
         
     }
@@ -16,8 +27,8 @@ async function updateProfile(req,res){
     try {
       /*--> update user and send a respond that the user as been updated <--*/
               if (
-                validate.email(email) ||
-                validate.userName(userName) ||
+                validate.email(email) &&
+                validate.userName(userName) &&
                 validate.password(password)
               ) {               
                 await Users.update(
@@ -29,7 +40,7 @@ async function updateProfile(req,res){
                   },
                   {
                     where: {
-                      id: 22,
+                      userName
                     },
                   }
                 );

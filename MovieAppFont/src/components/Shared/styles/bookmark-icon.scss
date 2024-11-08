@@ -10,12 +10,21 @@ $main-bg:#ff4400a1;
     padding: .5rem;
     cursor: pointer;
     top: 6px;
-    color: $secondary-bg;
     right: 6px ;
-    background-color: lighten($color: $main-bg, $amount: 20%);
     transition: background-color 200ms ease-in-out;
 
     &:hover{
-        background-color: $main-bg;
+        color:$secondary-bg;
+        background-color: lighten($color: $main-bg, $amount: 20%);
     }
+}
+.bookmarked{
+    color: $main-bg;
+    background-color: $secondary-bg;
+    transition: background-color 200ms ease-in-out;
+}
+.not-bookmarked{
+    background-color: $main-bg;
+    color: $secondary-bg;
+    transition: background-color 200ms ease-in-out;
 }

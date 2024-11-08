@@ -1,5 +1,5 @@
 const { Users } = require("../model/users.model");
-async function createUser(req,res){
+async function createUser(req,res,next){
     const {userName,email,password} = req.body
 
     try {
@@ -8,8 +8,14 @@ async function createUser(req,res){
         email,
         password,
     });
-    
-    return res.status(201).json(createNewUser);
+    if(createNewUser){
+      req.login(createNewUser, function (err) {
+        if (err) {
+          return next(err);
+        }
+        return res.status(200).json({ redirect: "/app" });
+      });
+    }
     } catch (err) {
 
         if (err.name === "SequelizeUniqueConstraintError") {
@@ -18,6 +24,8 @@ async function createUser(req,res){
           return res.status(400).json({
             error: `${message[0]} ${value} already in use`,
           });
+        }else{
+            next(err)
         }
     }
 }

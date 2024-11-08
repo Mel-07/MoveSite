@@ -1,10 +1,10 @@
-import { TmdbMovie, TmdbSeries, TmdbTVShowAndMovieResponse } from "../../Types/apptypes";
+import { TmdbMovie, TmdbSeries, TmdbTVShowAndMovieResponse,TopRatedMovies,TopRatedSeries } from "../../Types/apptypes";
 import { FaFilm, FaTv } from "react-icons/fa6";
 import { checkMedianType, checkMovieType } from "../../helpers/functions";
 import '../../styles/general.scss'
 import TitleMovie from "./TitleMovie";
 interface Props {
-    items:TmdbMovie|TmdbSeries|TmdbTVShowAndMovieResponse,
+    items:TmdbMovie|TmdbSeries|TmdbTVShowAndMovieResponse|TopRatedMovies|TopRatedSeries,
     font_size?:string[],
     title:boolean
 }

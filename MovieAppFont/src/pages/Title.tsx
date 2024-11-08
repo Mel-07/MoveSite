@@ -2,42 +2,22 @@ import Hero from "../components/Hero-section/Hero";
 import Parts from "../components/Shared/components/Parts";
 import Cast from "../components/Crew/Cast";
 import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { limitNumberOfCast } from "../helpers/functions";
 import { TmdbTVShowAndMovieResponse } from "../Types/apptypes";
+import { useGetTitleQuery } from "../app_state/Query/movie";
 const key = import.meta.env.VITE_MOVIE_KEY;
 
 function Title() {
   const [searchParam] = useSearchParams();
   const id = searchParam.get("id");
   const type = searchParam.get("type");
-  const [results,setResult] = useState<[]|TmdbTVShowAndMovieResponse>([]);
+  const {data} = useGetTitleQuery({type,id,key},{refetchOnMountOrArgChange:true})
 
-  useEffect(()=>{
-    const getRecommendations = async ()=>{
-          try {
-            const res = await fetch(
-              `https://api.themoviedb.org/3/${type}/${id}?api_key=${key}&append_to_response=credits,similar,recommendations`
-            );
-
-            const results = await res.json()
-            setResult(results)
-
-            if(!res.ok){
-              throw new Error('Respond Not Found')
-            }
-          } catch (err) {
-            console.log(err as Error
-            )
-          } finally{
-            /*  */
-          }
-    }
-    getRecommendations()
-  },[id,type])
+  
 
 
-  const details = results as TmdbTVShowAndMovieResponse;
+  const details: TmdbTVShowAndMovieResponse =
+    data as TmdbTVShowAndMovieResponse;
 
 
   return (

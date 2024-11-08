@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import TitlePoster from "../../Title/TitlePoster";
-import { TmdbMovie, TmdbSeries, } from "../../../Types/apptypes";
+import { TmdbMovie, TmdbSeries, TopRatedMovies,TopRatedSeries } from "../../../Types/apptypes";
 import Rating from "./Rating";
 import backUpBg from '../../../assets/images/movie-background-collage.jpg'
 import BookmarkIcon from "./BookmarkIcon";
 interface Props {
   to: string;
-  item: TmdbMovie | TmdbSeries ;
+  item: TmdbMovie | TmdbSeries | TopRatedMovies | TopRatedSeries;
   rating?: boolean;
+  bookmark?: TmdbMovie[] | [];
 }
-function List({to,item,rating}:Props){
+function List({to,item,rating,bookmark}:Props){
   return (
     <li
       style={{
@@ -21,7 +22,7 @@ function List({to,item,rating}:Props){
       <TitlePoster title={true} font_size={['1.1rem','.9rem','1rem','1rem']} items={item}/>
       </Link>
       {rating && <Rating rate={item.vote_average}/>}
-      <BookmarkIcon item={item}/>
+      <BookmarkIcon booked={bookmark || []} item={item}/>
     </li>
   );
 }

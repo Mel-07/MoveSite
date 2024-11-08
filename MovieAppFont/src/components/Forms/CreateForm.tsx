@@ -108,7 +108,7 @@ function CreateForm({setFormType}:Props) {
             body:JSON.stringify({
                 userName:formDetails.username,
                 email:formDetails.email,
-                password:formDetails.username
+                password:formDetails.password
             })
         });
         if (!res.ok) {

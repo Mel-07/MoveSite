@@ -3,10 +3,14 @@ import {
   TmdbSeries,
   TmdbMovieDetail,
   TmdbTVShowDetail,
-  Casts
+  Casts,
+  TmdbMovieUpcoming,
+  TopRatedMovies,
+  TopRatedSeries,
+  // TmdbMovie_TmdbSeries,
 } from "../Types/apptypes";
 
-type Media = TmdbMovie | TmdbSeries | TmdbMovieDetail | TmdbTVShowDetail;
+type Media = TmdbMovie | TmdbSeries | TmdbMovieDetail | TmdbTVShowDetail | TmdbMovieUpcoming|TopRatedMovies|TopRatedSeries;
 
 const checkMovieType = (media?:Media,getYear?:boolean|undefined,name?:boolean|undefined) => {
 
@@ -94,7 +98,7 @@ const shortMonths = [
 ];
 
 const getFullDate = (
-  details: TmdbMovieDetail | TmdbTVShowDetail | TmdbMovie | TmdbSeries
+  details: TmdbMovieDetail | TmdbTVShowDetail | TmdbMovie | TmdbMovieUpcoming
 ) => {
   const date =
     details && "release_date" in details
@@ -167,8 +171,24 @@ const comparePassword = (password:Password,confirmPassword:ConfirmPassword) =>{
 }
 
 
+function checkBooked(
+  items: TmdbMovie | TmdbSeries | TopRatedMovies | TopRatedSeries,
+  booked: TmdbMovie[]
+) {
+  
+
+    const someValue = booked.some((book) =>{
+      const title = 'title' in items ? items.title : 'name' in items ? items.name : null;
+      return book?.id === items?.id &&  title === book?.title
+    }  );
+
+    return someValue
+
+}
+
 export{
     checkMovieType,
+    checkBooked,
     convertRating,
     joinAndRandomizeArray,
     getFullDate,

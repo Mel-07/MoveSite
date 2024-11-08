@@ -10,11 +10,11 @@ return res.sendFile(path.join(__dirname, "..", "..", "Public", "dist", "index.ht
     })
   }
 }
-function loginUser (_, res) {
-    res.redirect("/");
-}
+// function loginUser (_, res) {
+//     res.redirect("/");
+// }
 
 module.exports = {
-  loginUser,
+  // loginUser,
   getLoginFrom,
 };

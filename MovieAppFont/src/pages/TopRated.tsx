@@ -2,21 +2,25 @@ import H1 from "../components/Heading/H1";
 import Search from "../components/Shared/components/Search";
 import SearchResult from "../components/Shared/components/SearchResult";
 import { FaGripfire } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useSearch from "../utils/useSearch";
 import Grid from "../components/Shared/components/Grid";
 const key = import.meta.env.VITE_MOVIE_KEY;
-import { TmdbMovie, TmdbMoviesListResponse,TmdbSeries,TmdbSeriesListResponse,SearchType} from "../Types/apptypes";
+import { TopRatedSeries,TopRatedMovies,SearchType} from "../Types/apptypes";
 import { getPageNumberArray } from "../helpers/functions";
+import { useGetTopRatedQuery } from "../app_state/Query/movie";
+import { useAppDispatch} from "../app_state/hooks";
+import { setAllResults } from "../app_state/app_logic/state";
 
 function TopRated() {
 
-  const [type, setType] = useState<string>("movie");
-  const [error, setError] = useState<string|null>(null);
+  const [type, setType] = useState<'movie'|'tv'>("movie");
+  const [error] = useState<string|null>(null);
   const [page,setPage] = useState<number|string>(1);
-  const [isLoading,setIsLoading] = useState<boolean>(true);
-  const [results,setResults] = useState<TmdbMoviesListResponse|TmdbSeriesListResponse|null>(null)
+  const [isLoading] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
   const { text, setText, searchResult, searchError, searchIsLoading, search } = useSearch();
+
 
   const changeTypeMovie=()=>{
   
@@ -30,40 +34,15 @@ function TopRated() {
   };  
 
 /* fetch the top-rated movies and series  */
+const {data:rate} = useGetTopRatedQuery({page,type,key})
+  const mediaResults:TopRatedMovies[]| TopRatedSeries[] = useMemo(()=>{ return rate?.results || [];},[rate])
+  const pageNumber = rate?.total_pages;
 
-useEffect(()=>{
+  useEffect(() => {
+    dispatch(setAllResults([...mediaResults]));
+  }, [ dispatch, mediaResults]);
 
-  const handleFetch = async()=>{
-
-    setIsLoading(true)
-
-    try{
-          const res = await fetch(
-      `https://api.themoviedb.org/3/${type}/top_rated?api_key=${key}&page=${page}&language=en-US`
-    );
-    if (!res.ok){
-      throw new Error('No Respond From Sever')
-    }
-    const results = await res.json();
-
-    setResults(results)
-    setIsLoading(false)
-
-    console.log(results)
-    }catch(err){
-      const newError = err as Error;
-      setError(newError.message)
-    }finally{
-      setIsLoading(false)
-    }
-
-  }
-
-  handleFetch()
-
-},[type,page])
-  const mediaResults: TmdbMovie[]|TmdbSeries[] = results?.results || [];
-  const pageNumber = results?.total_pages;
+  
   const searchValue = searchResult as SearchType;
 
   return (
