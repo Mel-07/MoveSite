@@ -31,13 +31,6 @@ function Home() {
 
   const { data:bookmark} = useGetBookmarkQuery()
 
-  // const [apis] = useState<string[]>([
-  //   `https://api.themoviedb.org/3/trending/all/day?api_key=${key}`,
-  //   `https://api.themoviedb.org/3/movie/upcoming?api_key=${key}`,
-  //   `https://api.themoviedb.org/3/tv/${ids["series"]}/recommendations?api_key=${key}`,
-  //   `https://api.themoviedb.org/3/movie/${ids["movie"]}/recommendations?api_key=${key}`,
-  // ]);
-
   const { text, setText, searchResult, searchError, searchIsLoading, search }=useSearch();
   const homePageError = false
   const trending: TmdbMovie_TmdbSeries = useMemo(()=>{ return trendingMovie?.results || []},[trendingMovie]);

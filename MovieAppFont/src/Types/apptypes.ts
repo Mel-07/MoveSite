@@ -399,6 +399,8 @@ type AllResults =
 interface State {
   allResults: Array<AllResults> | [];
   allBookmarks: Array<TmdbMovie> | [];
+  page:number,
+  type:"movie"|"tv"
 }
 
 export type {

@@ -2,7 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { State, AllResults, TmdbMovie } from "../../Types/apptypes";
 const initialState:State= {
     allResults:[],
-    allBookmarks:[]
+    allBookmarks:[],
+    page:1,
+    type:'movie'
 }
 
 export const movieSlice = createSlice({
@@ -13,9 +15,17 @@ export const movieSlice = createSlice({
       (state.allResults = [...action.payload]);
     },
     setAllBookmarks(state, action: PayloadAction<TmdbMovie[] | []>) {
-        console.log(state.allBookmarks = [...action.payload])
+        state.allBookmarks = [...action.payload]
     },
+    setPageNumber (state, action:PayloadAction<number>) {
+      const page = action.payload
+      state.page = page
+    },
+    setMediaType (state,action:PayloadAction<'movie'|'tv'>){
+      const type = action.payload
+      state.type = type
+    }
   },
 });
 
-export const {setAllResults,setAllBookmarks} = movieSlice.actions;
+export const {setAllResults,setAllBookmarks,setPageNumber,setMediaType} = movieSlice.actions;
