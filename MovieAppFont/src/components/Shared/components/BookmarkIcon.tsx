@@ -48,7 +48,7 @@ function BookmarkIcon({
     }
 
     if (checkBooked(item, bookedV)) {
-      
+      console.log('present')
     } else {
       if (media_type) {
         addBookmark({ ...item, media_type });
