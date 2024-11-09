@@ -11,7 +11,9 @@ export const store = configureStore({
         movieSlice:movieSlice.reducer
     },
     middleware:(getDefaultMiddleWare)=>{
-        return getDefaultMiddleWare().concat(movieApi.middleware,backendApi.middleware)
+        return getDefaultMiddleWare({
+          serializableCheck: false,
+        }).concat(movieApi.middleware, backendApi.middleware);
     }
 })
 

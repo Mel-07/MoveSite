@@ -1,5 +1,5 @@
 import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Trending,TmdbUpcoming,TmdbTopRatedMovie,TmdbTopRatedSeries,BookmarkList, TmdbTVShowAndMovieResponse} from "../../Types/apptypes";
+import { Trending, TmdbSeries, TopRatedMovies, TopRatedSeries,TmdbUpcoming,TmdbTopRatedMovie,TmdbTopRatedSeries,BookmarkList, TmdbTVShowAndMovieResponse, TmdbMovie} from "../../Types/apptypes";
 import { FormDataProfile } from "../../Types/fromType";
 
 
@@ -63,6 +63,25 @@ export const backendApi = createApi({
         credentials: "include",
       }),
     }),
+    postBookmark: builder.mutation<
+      TmdbMovie[] | [],
+      | TmdbMovie
+      | TmdbSeries
+      | TopRatedMovies
+      | TopRatedSeries
+      | ({ media_type: string } & TopRatedMovies)
+      | ({ media_type: string } & TopRatedSeries)
+    >({
+      query: (marked) => ({
+        url: "/bookmark",
+        credentials: "include",
+        body: marked,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
     getProfile: builder.query<FormDataProfile, void>({
       query: () => {
         return {
@@ -73,7 +92,7 @@ export const backendApi = createApi({
     }),
     postProfile: builder.mutation<FormDataProfile, FormDataProfile>({
       query: () => ({
-        url: "profile",
+        url: "/profile",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,4 +104,4 @@ export const backendApi = createApi({
 });
 
 export const{useGetTitleQuery,useGetTrendingQuery,useGetUpcomingQuery,useGetRecommendationsMovieQuery,useGetTopRatedQuery} = movieApi;
-export const {useGetBookmarkQuery} = backendApi
+export const {useGetBookmarkQuery,usePostBookmarkMutation} = backendApi

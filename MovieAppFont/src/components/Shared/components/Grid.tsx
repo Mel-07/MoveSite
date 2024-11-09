@@ -23,6 +23,7 @@ function Grid({ items,rating=true,median_type,bookmark }: Props) {
               rating={rating}
               item={item}
               key={item.id}
+              media_type={median_type}
               to={`/app/title?id=${item.id}&type=${
                 median_type ? median_type : 'media_type' in item && item.media_type
               }`}

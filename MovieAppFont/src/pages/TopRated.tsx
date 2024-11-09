@@ -2,7 +2,7 @@ import H1 from "../components/Heading/H1";
 import Search from "../components/Shared/components/Search";
 import SearchResult from "../components/Shared/components/SearchResult";
 import { FaGripfire } from "react-icons/fa6";
-import { useMemo, useState } from "react";
+import {  useState } from "react";
 import useSearch from "../utils/useSearch";
 import Grid from "../components/Shared/components/Grid";
 const key = import.meta.env.VITE_MOVIE_KEY;
@@ -33,9 +33,10 @@ function TopRated() {
 
 /* fetch the top-rated movies and series  */
 const {data:rate,isLoading} = useGetTopRatedQuery({page,type,key})
-  const mediaResults:TopRatedMovies[]| TopRatedSeries[] = useMemo(()=>{ return rate?.results || [];},[rate])
+  const mediaResults:TopRatedMovies[]| TopRatedSeries[] = rate?.results || []
   const pageNumber = rate?.total_pages;
   const { data: bookmark } = useGetBookmarkQuery();
+
 
 
   
@@ -89,15 +90,20 @@ const {data:rate,isLoading} = useGetTopRatedQuery({page,type,key})
               </button>
             </div>
           </section>
-          <Grid median_type={type} bookmark={bookmark?.newBookmarkLists || []} items={mediaResults} />
+          <Grid
+            median_type={type}
+            bookmark={bookmark?.newBookmarkLists || []}
+            items={mediaResults}
+          />
           <section className="page-number-section">
             <ul className="page-number-container">
-              {pageNumber && isLoading ===false &&
+              {pageNumber &&
+                isLoading === false &&
                 getPageNumberArray(pageNumber).map(
                   (v) =>
                     v <= 10 && (
                       <li
-                      key={v}
+                        key={v}
                         className={`page-number ${
                           page === v && "bg-[#ff4500]"
                         }`}
