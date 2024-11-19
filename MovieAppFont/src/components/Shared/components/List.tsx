@@ -8,10 +8,9 @@ interface Props {
   to: string;
   item: TmdbMovie | TmdbSeries | TopRatedMovies | TopRatedSeries;
   rating?: boolean;
-  media_type?:string
-  bookmark?: TmdbMovie[] | [];
+  media_type?: string;
 }
-function List({ to, item, rating, bookmark, media_type }: Props) {
+function List({ to, item, rating, media_type}: Props) {
   return (
     <li
       style={{
@@ -29,7 +28,7 @@ function List({ to, item, rating, bookmark, media_type }: Props) {
         />
       </Link>
       {rating && <Rating rate={item.vote_average} />}
-      <BookmarkIcon media_type={media_type} booked={bookmark || []} item={item} />
+      <BookmarkIcon media_type={media_type} item={item} />
     </li>
   );
 }

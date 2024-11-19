@@ -12,7 +12,7 @@ async function startSever(){
   try {
 
     await sequelizeCall()
-    await sync(/* {force:true } */);
+    await sync(/* {force:true } */ /* { alter: true } */);
 
     const server = http.createServer(app);
     server.listen(port, () => {

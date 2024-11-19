@@ -4,11 +4,10 @@ import './displayBookmark.scss'
 
 interface Props {
   data: TmdbMovie[] | [];
-  bookmarkNumber:number|null|undefined,
-  booked:TmdbMovie[]|[]
+  bookmarkNumber: number | null | undefined;
 }
 
-function DisplayBookmark({data,bookmarkNumber,booked}:Props) {
+function DisplayBookmark({data,bookmarkNumber}:Props) {
   /* data.length <= 0 && bookmarkNumber === null */
   if (data.length <= 0 && bookmarkNumber === null) {
     return (
@@ -19,7 +18,7 @@ function DisplayBookmark({data,bookmarkNumber,booked}:Props) {
   } else {
     return (
       <div>
-        <Grid items={data} bookmark={booked} />
+        <Grid items={data}  />
       </div>
     );
   }

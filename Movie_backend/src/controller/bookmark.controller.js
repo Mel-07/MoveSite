@@ -1,22 +1,56 @@
+const { where,Op, or } = require('sequelize');
 const {Bookmark} = require('../model/bookmark.model')
 async function addOrRemoveBookmark(req,res){
-  const {body} = req;
+
+  const {
+    id,
+    title,
+    name,
+    original_name,
+    original_title,
+    release_date,
+    first_air_date,
+    genre_ids,
+    origin_country,
+    backdrop_path,
+    overview,
+    poster_path,
+    media_type,
+    adult,
+    original_language,
+    popularity,
+    video,
+    vote_average,
+    vote_count,
+  } = req.body
+  const {
+    id:userId
+  } = req.user
 
     try {
-        console.log(body)
 
         const bookmarkCreated = await Bookmark.create({
-          ...req.body,
-          title: req.body.name ? req.body.name : req.body.title,
-          original_title: req.body.original_name
-            ? req.body.original_name
-            : req.body.original_title,
-          release_date: req.body.first_air_date
-            ? req.body.first_air_date
-            : req.body.release_date,
-          genre_ids: req.body.genre_ids.join("-").toString(),
-          origin_country: req.body.origin_country ? req.body.origin_country.join("-").toString() :null,
-          userId: req.user.id,
+          backdrop_path,
+          overview,
+          poster_path,
+          media_type,
+          adult,
+          original_language,
+          popularity,
+          video,
+          vote_average,
+          vote_count,
+          id_movie:id,
+          title: name ? name : title,
+          original_title: original_name
+            ? original_name
+            : original_title,
+          release_date: first_air_date
+            ? first_air_date
+            : release_date,
+          genre_ids: genre_ids.join("-").toString(),
+          origin_country: origin_country? origin_country.toString() :null,
+          userId
         });
 
         console.log(bookmarkCreated.toJSON())
@@ -45,7 +79,7 @@ try {
      if( bookmarkList){
       newBookmarkLists =bookmarkList.map((v)=>({
         backdrop_path:v.backdrop_path,
-        id:v.id,
+        id:v.id_movie,
         title:v.title,
         original_title:v.original_title,
         overview:v.overview,
@@ -68,11 +102,51 @@ try {
       numberOfBookmark:newBookmarkLists.length
     });
 } catch (error) {
-  
+      res.status(400).json({
+        message: error.message,
+        success: false,
+      });
 }
+}
+
+async function deleteBookmark(req,res){
+  const { body:{
+    id:id_movie,
+    title
+  } } = req;
+  const {id:userId} = req.user
+
+  console.log(userId)
+
+
+  try {
+    const bookmark = await Bookmark.destroy({
+      where:{
+        [Op.and]:[{
+          id_movie
+        },{
+          title
+        },
+      {
+        userId
+      }]
+      },
+      raw:true
+    })
+    console.log(bookmark)
+    res.status(200).json({
+      success:true
+    })
+  } catch (error) {
+    res.status(400).json({
+      message:error.message,
+      success:false
+    })
+  }
 }
 
 module.exports={
     addOrRemoveBookmark,
-    getBookmark
+    getBookmark,
+    deleteBookmark
 }

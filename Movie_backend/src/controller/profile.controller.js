@@ -4,18 +4,25 @@ const {Users} = require('../model/users.model')
 async function getProfile(req,res){
     try {
         const user = await Users.findOne({ where:req?.user?.id})
-
+        const{userName,image,email} = user?.dataValues
         if(user){
           res.status(200).json({
-            ...user
+            userName,
+            image,
+            email
           })
         }else{
-          res.status(200).json({
-            user:false
+          res.status(401).json({
+            error:"User not found"
           })
         }
 
     } catch (error) {
+
+      res.status(400).json({
+        message:error.message,
+        success: false
+      })
         
     }
 }
@@ -23,7 +30,6 @@ async function getProfile(req,res){
 async function updateProfile(req,res){
 
     const {userName,email,image,password} = req.body
-    console.log(!validate.email(email));
     try {
       /*--> update user and send a respond that the user as been updated <--*/
               if (

@@ -6,14 +6,13 @@ import { useGetBookmarkQuery } from "../app_state/Query/movie";
 import useSearch from "../utils/useSearch";
 import DisplayBookmark from "../components/Bookmarks/DisplayBookmark";
 import { useEffect } from "react";
-import { useAppDispatch,useAppSelector} from "../app_state/hooks";
+import { useAppDispatch} from "../app_state/hooks";
 import { setAllBookmarks } from "../app_state/app_logic/state";
 
 function BookMark() {
   const { text, setText, searchResult, searchError, searchIsLoading, search } = useSearch();
   const dispatch = useAppDispatch()
-  const {data,error} = useGetBookmarkQuery();
-  const {allBookmarks} = useAppSelector(state => state.movieSlice)
+  const {data,error} = useGetBookmarkQuery();  
 
   useEffect(()=>{
     if(data !== undefined){
@@ -57,7 +56,7 @@ function BookMark() {
           {/**
            * send bookmark array to DisplayBookmark
            */}
-          <DisplayBookmark booked={allBookmarks} bookmarkNumber={data?.numberOfBookmark} data={data?.newBookmarkLists||[]} />
+          <DisplayBookmark  bookmarkNumber={data?.numberOfBookmark} data={data?.newBookmarkLists||[]} />
         </div>
       )}
     </div>

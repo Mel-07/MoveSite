@@ -9,6 +9,7 @@ const {
   updateProfile,
   createUser,
   addOrRemoveBookmark,
+  deleteBookmark,
   // loginUser,
   getLoginFrom,
   staticServer,
@@ -140,6 +141,7 @@ app.post("/bookmark",isAuthenticated,addOrRemoveBookmark);
 app.get("/bookmarks",isAuthenticated,getBookmark);
 app.get("/profile", isAuthenticated, getProfile);
 app.post("/profile", isAuthenticated, updateProfile);
+app.delete('/delete',isAuthenticated,deleteBookmark)
 /* served files should be the last  */
 app.get("/*", isAuthenticated, staticServer);
 

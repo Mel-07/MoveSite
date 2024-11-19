@@ -2,93 +2,105 @@ import FormBtn from "../Shared/components/Formbtn"
 import FormInput from "../Shared/components/FormInput";
 import { FaUser, FaPen, FaLock, FaExclamation } from "react-icons/fa6";
 import { SiGmail } from "react-icons/si";
-// import profileImage from '../../assets/images/man-profile.jpg'
 import userImageFallback from '../../assets/images/user.svg'
-import { ChangeEvent, useState } from "react";
-import {FormDataProfile} from '../../Types/fromType'
+import { ChangeEvent, useEffect, useState } from "react";
 import './from.scss'
 import '../Shared/styles/from-error.scss'
-import { useFetch } from "../../utils/useFetch";
 import { checkFileSize, validateEmail, validatePassWord, validateUserName } from "../../helpers/vaildators";
+import { useGetProfileQuery, usePostProfileMutation } from "../../app_state/Query/movie";
+import { useAppDispatch, useAppSelector } from "../../app_state/hooks";
+import { setFormData, setProfileData } from "../../app_state/app_logic/state";
 
 function Form() {
-    const [formData,setFormData] = useState<FormDataProfile>({
-        image:null,
-        userName:'',
-        email:'',
-        password:''
-    })
+  const dispatch = useAppDispatch();
+  const {email,userName,password,image} = useAppSelector(state => state.movieSlice.formData)
+    // const [formData,setFormData] = useState<FormDataProfile>({
+    //     image:null,
+    //     userName:'',
+    //     email:'',
+    //     password:''
+    // })
     const [formError,setFormError] = useState({
         image:false,
         name:false,
         email:false,
         password:false
     })
+    const {data:profileData} = useGetProfileQuery()
+    const [postProfile] = usePostProfileMutation()
     const [profile,setProfile] = useState<string|null>(null)
-    const [profileApi] = useState(["http://localhost:8000/profile"]);
-    const  get = useFetch(profileApi)
-    console.log(get)
+
+
+    useEffect (()=>{
+      if(profileData){
+        dispatch(setProfileData(
+          {
+            ...profileData
+          }
+        ));
+      }
+    },[dispatch,profileData])
 
     const handleFromData = (e:ChangeEvent<HTMLInputElement>)=>{
 
         const {name,value} = e.target
-        switch (name) {
-          case "userName":{
-            setFormData((prev) => ({ ...prev, [name]: value }));
-              if (validateUserName(value)) {
-                setFormError((prev) => ({ ...prev, name: false }));
-              } else {
-                setFormError((prev) => ({ ...prev, name: true }));
-              }
-          }
-            break;
-          case "email":{
-            setFormData((prev) => ({ ...prev, [name]: value }));
-              if (validateEmail(value)) {
-                setFormError((prev) => ({ ...prev, email: false }));
-              } else {
-                setFormError((prev) => ({ ...prev, email: true }));
-              }
-          }
-            break;
-          case "password":{
-            setFormData((prev) => ({ ...prev, [name]: value }));
-              if (validatePassWord(value)) {
-                setFormError((prev) => ({ ...prev, password: false }));
-              } else {
-                setFormError((prev) => ({ ...prev, password: true }));
-              }
-          }
-            break;
-          case "image":
-            setFormData((prev)=>({...prev, [name]:value}))
-            break;
-          default:
-            break;
-        }
+
+        dispatch(setFormData({
+          name,value
+        }))
+        // switch (name) {
+        //   case "userName":{
+        //     setFormData((prev) => ({ ...prev, [name]: value }));
+        //       if (validateUserName(value)) {
+        //         setFormError((prev) => ({ ...prev, name: false }));
+        //       } else {
+        //         setFormError((prev) => ({ ...prev, name: true }));
+        //       }
+        //   }
+        //     break;
+        //   case "email":{
+        //     setFormData((prev) => ({ ...prev, [name]: value }));
+        //       if (validateEmail(value)) {
+        //         setFormError((prev) => ({ ...prev, email: false }));
+        //       } else {
+        //         setFormError((prev) => ({ ...prev, email: true }));
+        //       }
+        //   }
+        //     break;
+        //   case "password":{
+        //     setFormData((prev) => ({ ...prev, [name]: value }));
+        //       if (validatePassWord(value)) {
+        //         setFormError((prev) => ({ ...prev, password: false }));
+        //       } else {
+        //         setFormError((prev) => ({ ...prev, password: true }));
+        //       }
+        //   }
+        //     break;
+        //   case "image":
+        //     setFormData((prev)=>({...prev, [name]:value}))
+        //     break;
+        //   default:
+        //     break;
+        // }
     }
 
     const handlePost = () => {
 
       if (
-        validateUserName(formData.userName) &&
-        validateEmail(formData.email) &&
-        validatePassWord(formData.password)
+        validateUserName(userName) &&
+        validateEmail(email) &&
+        validatePassWord(password)
       ) {
        async function postToProfile(){
 
         try {
-            const res = await fetch('http://localhost:8000/profile',{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify(formData)
-            })
 
-            const data = await res.json()
-
-            console.log(data)
+          await postProfile({
+            userName,
+            image,
+            email,
+            password
+          })
         } catch (error) {
             console.log(error)
         }
@@ -96,21 +108,21 @@ function Form() {
        postToProfile()
       }
       else{
-            if (validatePassWord(formData.password)) {
-            setFormError((prev) => ({ ...prev, password: false }));
-            } else {
-            setFormError((prev) => ({ ...prev, password: true }));
-            }
-            if (validateEmail(formData.email)) {
-            setFormError((prev) => ({ ...prev, email: false }));
-            } else {
-            setFormError((prev) => ({ ...prev, email: true }));
-            }
-            if (validateUserName(formData.userName)) {
-            setFormError((prev) => ({ ...prev, name: false }));
-            } else {
-            setFormError((prev) => ({ ...prev, name: true }));
-            }
+            // if (validatePassWord(password)) {
+            // setFormError((prev) => ({ ...prev, password: false }));
+            // } else {
+            // setFormError((prev) => ({ ...prev, password: true }));
+            // }
+            // if (validateEmail(formData.email)) {
+            // setFormError((prev) => ({ ...prev, email: false }));
+            // } else {
+            // setFormError((prev) => ({ ...prev, email: true }));
+            // }
+            // if (validateUserName(formData.userName)) {
+            // setFormError((prev) => ({ ...prev, name: false }));
+            // } else {
+            // setFormError((prev) => ({ ...prev, name: true }));
+            // }
       }                 
 
 
@@ -151,7 +163,7 @@ function Form() {
             }
         });
     }
-    console.log(formError);
+
   return (
     <div className=" min-h-full px-4 form-container">
       <div>
@@ -181,21 +193,23 @@ function Form() {
           <div>
             <FormInput
               onChange={handleFromData}
-              value={formData.userName}
+              value={
+                 userName 
+              }
               icon={FaUser}
               type="text"
               name="userName"
             />
             <FormInput
               onChange={handleFromData}
-              value={formData.email}
+              value={email}
               icon={SiGmail}
               type="email"
               name="email"
             />
             <FormInput
               onChange={handleFromData}
-              value={formData.password}
+              value={password}
               icon={FaLock}
               type="password"
               name="password"
@@ -207,7 +221,7 @@ function Form() {
               title="Rest"
             />
           </div>
-          
+
           <ul className="from-error-container">
             {formError.name && (
               <li>

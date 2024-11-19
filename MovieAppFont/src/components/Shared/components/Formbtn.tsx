@@ -8,7 +8,6 @@ interface Props extends HTMLAttributes<HTMLButtonElement>{
 }
 
 function FormBtn({title,className,type ='submit',...props}:Props) {
-    console.log(props)
   return (
     <button
     type={type}

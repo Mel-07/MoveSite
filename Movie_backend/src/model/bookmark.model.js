@@ -3,12 +3,16 @@ const {sequelize,DataTypes}  = require('./db')
 const Bookmark = sequelize.define(
   "bookmarks",
   {
+    id:{
+      type:DataTypes.INTEGER,
+      autoIncrement:true,
+      primaryKey:true
+    },
     backdrop_path: {
       type: DataTypes.STRING(150),
     },
-    id: {
+    id_movie: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       allowNull: false,
     },
     title: {
@@ -55,18 +59,14 @@ const Bookmark = sequelize.define(
     },
   },
   {
-    indexes: [
+/*     indexes: [
       {
-        unique: true,
-        name: "unique_bookmarks_index",
+        unique:true,
         fields: [
-          "id", // Primary key is already unique
-          "backdrop_path", // Optional, if you still want it unique with this
-          "title",
-          "media_type",
+          'userId'
         ],
       },
-    ],
+    ], */
   }
 );
 module.exports = {

@@ -1,7 +1,6 @@
-
 import { FaRegBookmark } from "react-icons/fa6";
-import '../styles/bookmark-icon.scss'
-import { HTMLAttributes, } from "react";
+import "../styles/bookmark-icon.scss";
+import { HTMLAttributes } from "react";
 import {
   TmdbMovie,
   TmdbSeries,
@@ -9,84 +8,74 @@ import {
   TopRatedSeries,
 } from "../../../Types/apptypes";
 import { checkBooked } from "../../../helpers/functions";
-import { usePostBookmarkMutation } from "../../../app_state/Query/movie";
-/* the Bookmark when clicked should get all the data of a movie {
-id and media type} to be sent and stored in the backend  */
+import {
+  useDeletePostMutation,
+  useGetBookmarkQuery,
+  usePostBookmarkMutation,
+} from "../../../app_state/Query/movie";
+
 interface Props extends HTMLAttributes<HTMLButtonElement> {
   className?: string;
-  item:
-    | TmdbMovie
-    | TmdbSeries
-    | TopRatedMovies
-    | TopRatedSeries
-  booked: TmdbMovie[] | [];
+  item: TmdbMovie | TmdbSeries | TopRatedMovies | TopRatedSeries;
   media_type?: string;
 }
 
-interface Details {
-  item: TmdbMovie | TmdbSeries | TopRatedMovies | TopRatedSeries | ({ media_type: string } & TopRatedMovies)
-    | ({ media_type: string } & TopRatedSeries);
-  booked: TmdbMovie[] | [];
-}
+function BookmarkIcon({ className = "", item, media_type, ...props }: Props) {
+  const [addBookmark] = usePostBookmarkMutation();
+  const [removeBookmark,{
+    data
+  }] = useDeletePostMutation();
+  const { data: bookedGotten, refetch } = useGetBookmarkQuery();
+  const booked = bookedGotten?.newBookmarkLists ?? [];
 
-function BookmarkIcon({
-  className = "",
-  item,
-  booked,
-  media_type,
-  ...props
-}: Props) {
-  const [addBookmark, result] = usePostBookmarkMutation();
 
-  /* --> function to send request to movie_back_end  <-- */
-
-  const postBookmarkDetails = async ({ item, booked }: Details) => {
-    const bookedV = booked;
-    if (!item || !bookedV) {
-      console.error("Item is not defined.");
-      return;
-    }
-
-    if (checkBooked(item, bookedV)) {
-      console.log('present')
-    } else {
-      if (media_type) {
-        addBookmark({ ...item, media_type });
-      } else {
-        addBookmark(item);
+  const postBookmarkDetails = async () => {
+    try {
+      if (checkBooked(item, booked)) {
+        const title =
+          "title" in item ? item.title : "name" in item ? item.name : null;
+        const bookedItem = booked.find(
+          (book) => book.id === item.id && book.title === title
+        );
+        console.log({
+          id:bookedItem?.id,
+          title
+        });
+       removeBookmark({id:bookedItem? bookedItem.id : null,title})
+       console.log("yes");
+        if (bookedItem) {
+                  // await removeBookmark({ id: bookedItem.id, title }).unwrap();
+                  logger();
+                  // Refetch to confirm deletion
+                  await refetch();
+        }
+      } else if(!checkBooked(item, booked)){
+        console.log("no");
+        if (media_type) {
+          await addBookmark({ ...item, media_type }).unwrap();
+        } else {
+          await addBookmark(item).unwrap();
+        }
+        await refetch();
       }
-      
+    } catch (error) {
+      console.error("Error in bookmark operation:", error);
     }
-    // try {
-    //   const res = await fetch(`http://localhost:8000/bookmark`, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     credentials: "include",
-    //     method: "POST",
-    //     body: JSON.stringify(item),
-    //   });
-    //   const data = await res.json();
-
-    //   console.log(data);
-    // } catch (error) {
-    //   const errorMessage = error as Error;
-    //   console.error(errorMessage.message);
-    // }
-    console.log(result);
   };
+
+  function logger(){
+     console.log(data);
+  }
 
   return (
     <button
       {...props}
       type="button"
       className={`${
-        item && booked && checkBooked(item, booked)
-          ? " bookmarked"
-          : "not-bookmarked"
+        checkBooked(item, booked) ? "bookmarked" : "not-bookmarked"
       } bookmark-icon-container ${className}`}
       aria-label="Bookmark"
-      onClick={async () => await postBookmarkDetails({ item, booked })}
+      onClick={postBookmarkDetails}
     >
       <FaRegBookmark />
     </button>

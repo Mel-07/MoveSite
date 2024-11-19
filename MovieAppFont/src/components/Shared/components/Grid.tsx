@@ -6,15 +6,13 @@ import {
   TmdbMovie_TmdbSeries,
   TopRatedMovies,
   TopRatedSeries,
-  TmdbMovie,
 } from "../../../Types/apptypes";
 interface Props {
   items: TmdbMovie_TmdbSeries | TopRatedMovies[] | TopRatedSeries[];
   rating?: boolean;
   median_type?: string;
-  bookmark?: TmdbMovie[] | [];
 }
-function Grid({ items,rating=true,median_type,bookmark }: Props) {
+function Grid({ items,rating=true,median_type }: Props) {
   return (
     <CustomElement className="grid-container" tag="ul">
       {items.length > 0
@@ -27,7 +25,6 @@ function Grid({ items,rating=true,median_type,bookmark }: Props) {
               to={`/app/title?id=${item.id}&type=${
                 median_type ? median_type : 'media_type' in item && item.media_type
               }`}
-              bookmark={bookmark}
             />
           ))
         : Array.from({ length: 14 }).map((_, i) => (

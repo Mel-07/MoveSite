@@ -399,8 +399,15 @@ type AllResults =
 interface State {
   allResults: Array<AllResults> | [];
   allBookmarks: Array<TmdbMovie> | [];
-  page:number,
-  type:"movie"|"tv"
+  page: number;
+  type: "movie" | "tv";
+  isBooked: boolean;
+  formData: {
+    image: string|null;
+    userName: string;
+    email: string;
+    password: string;
+  };
 }
 
 export type {

@@ -9,6 +9,7 @@ export const movieApi = createApi({
     baseUrl: `https://api.themoviedb.org/3/`,
   }),
   refetchOnReconnect: true,
+  refetchOnMountOrArgChange:true,
   endpoints: (builder) => ({
     /* get Trending */
     getTrending: builder.query<Trending, string>({
@@ -55,13 +56,16 @@ export const backendApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `http://localhost:8000`,
   }),
+  tagTypes: ["Bookmarks"],
   refetchOnReconnect: true,
+  refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({
     getBookmark: builder.query<BookmarkList, void>({
       query: () => ({
         url: `/bookmarks`,
         credentials: "include",
       }),
+      providesTags: ["Bookmarks"],
     }),
     postBookmark: builder.mutation<
       TmdbMovie[] | [],
@@ -81,6 +85,7 @@ export const backendApi = createApi({
           "Content-Type": "application/json",
         },
       }),
+      invalidatesTags: ["Bookmarks"],
     }),
     getProfile: builder.query<FormDataProfile, void>({
       query: () => {
@@ -91,17 +96,31 @@ export const backendApi = createApi({
       },
     }),
     postProfile: builder.mutation<FormDataProfile, FormDataProfile>({
-      query: () => ({
+      query: (profileData) => ({
         url: "/profile",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body:profileData,
         credentials: "include",
       }),
+    }),
+    /* delete bookmark */
+    deletePost: builder.mutation<{success:true}, { id: number|null; title: string | null }>({
+      query: (content) => ({
+        url: "delete",
+        headers: {
+          "Content-type": "application/json",
+        },
+        method: "DELETE",
+        credentials: "include",
+        body: content,
+      }),
+      invalidatesTags: ["Bookmarks"],
     }),
   }),
 });
 
 export const{useGetTitleQuery,useGetTrendingQuery,useGetUpcomingQuery,useGetRecommendationsMovieQuery,useGetTopRatedQuery} = movieApi;
-export const {useGetBookmarkQuery,usePostBookmarkMutation} = backendApi
+export const {useGetBookmarkQuery, useGetProfileQuery,usePostProfileMutation,usePostBookmarkMutation,useDeletePostMutation} = backendApi
