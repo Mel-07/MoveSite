@@ -14,32 +14,28 @@ import {setPageNumber,setMediaType } from "../app_state/app_logic/state";
 
 
 function TopRated() {
-
-  const {page,type} = useAppSelector(state=> state.movieSlice)
-  const [error] = useState<string|null>(null);
+  const { page, type } = useAppSelector((state) => state.movieSlice);
+  const [error] = useState<string | null>(null);
   const dispatch = useAppDispatch();
-  const { text, setText, searchResult, searchError, searchIsLoading, search } = useSearch();
+  const { text, setText, searchResult, searchError, searchIsLoading, search } =
+    useSearch();
 
-
-  const changeTypeMovie=()=>{
-  
-      dispatch(setMediaType('movie'))
-      dispatch(setPageNumber(1))
-  }
+  const changeTypeMovie = () => {
+    dispatch(setMediaType("movie"));
+    dispatch(setPageNumber(1));
+  };
   const changeTypeSeries = () => {
-      dispatch(setMediaType("tv"))
-      dispatch(setPageNumber(1))
-  };  
+    dispatch(setMediaType("tv"));
+    dispatch(setPageNumber(1));
+  };
 
-/* fetch the top-rated movies and series  */
-const {data:rate,isLoading} = useGetTopRatedQuery({page,type,key})
-  const mediaResults:TopRatedMovies[]| TopRatedSeries[] = rate?.results || []
+  /* fetch the top-rated movies and series  */
+  const { data: rate, isLoading } = useGetTopRatedQuery({ page, type, key });
+  const mediaResults: TopRatedMovies[] | TopRatedSeries[] = rate?.results || [];
   const pageNumber = rate?.total_pages;
 
+  // const { data:bookmark} = useGetBookmarkQuery()
 
-
-
-  
   const searchValue = searchResult as SearchType;
 
   return (
@@ -90,10 +86,7 @@ const {data:rate,isLoading} = useGetTopRatedQuery({page,type,key})
               </button>
             </div>
           </section>
-          <Grid
-            median_type={type}
-            items={mediaResults}
-          />
+          <Grid median_type={type} items={mediaResults} />
           <section className="page-number-section">
             <ul className="page-number-container">
               {pageNumber &&

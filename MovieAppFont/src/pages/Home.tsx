@@ -18,7 +18,7 @@ const key = import.meta.env.VITE_MOVIE_KEY;
 import useSearch from "../utils/useSearch";
 import { useGetTrendingQuery,useGetUpcomingQuery,useGetRecommendationsMovieQuery} from "../app_state/Query/movie";
 import {  useMemo } from "react";
-import { useGetBookmarkQuery } from "../app_state/Query/movie";
+// import { useGetBookmarkQuery } from "../app_state/Query/movie";
 
 function Home() {
 
@@ -29,7 +29,7 @@ function Home() {
     movie: 124905,
   });
 
-  const { data:bookmark} = useGetBookmarkQuery()
+  // const { data:bookmark} = useGetBookmarkQuery()
 
   const { text, setText, searchResult, searchError, searchIsLoading, search }=useSearch();
   const homePageError = false
@@ -69,13 +69,13 @@ return (
       ) : (
         <div>
           <Trending
-            bookmark={bookmark?.newBookmarkLists || []}
+            // bookmark={bookmark?.newBookmarkLists || []}
             trending={trending}
           />
           <Trailer upcoming={upcomingList} />
           <Recommend
             items={recommendedMovies}
-            bookmark={bookmark?.newBookmarkLists || []}
+            // bookmark={bookmark?.newBookmarkLists || []}
           />
         </div>
       )}
