@@ -1,4 +1,4 @@
-import { TmdbMovie_TmdbSeries, } from "../../Types/apptypes";
+import { TmdbMovie_TmdbSeries,TopRatedMovies,TopRatedSeries,TmdbMovie,TmdbSeries,TmdbTVShowAndMovieResponse} from "../../Types/apptypes";
 import { Link } from "react-router-dom";
 import H1 from "../Heading/H1";
 import Skeleton from "react-loading-skeleton";
@@ -50,10 +50,28 @@ function Trending({trending}:TrendingProps) {
                     ?.split(" ")[0]
                     .toLowerCase()}`}
                 >
-                  <TitlePoster title={true} items={items} />
+                  <TitlePoster
+                    title={true}
+                    items={
+                      items as
+                        | TopRatedMovies
+                        | TopRatedSeries
+                        | TmdbMovie
+                        | TmdbSeries
+                        | TmdbTVShowAndMovieResponse
+                    }
+                  />
                 </Link>
                 <Rating rate={items.vote_average} />
-                <BookmarkIcon item={items} />
+                <BookmarkIcon
+                  item={
+                    items as
+                      | TmdbMovie
+                      | TmdbSeries
+                      | TopRatedMovies
+                      | TopRatedSeries
+                  }
+                />
               </SwiperSlide>
             ))
           : Array.from({ length: 12 }).map((_, i) => (
