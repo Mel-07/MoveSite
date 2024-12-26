@@ -11,7 +11,7 @@ import { getPageNumberArray } from "../helpers/functions";
 import { useGetTopRatedQuery } from "../app_state/Query/movie";
 import { useAppDispatch,useAppSelector} from "../app_state/hooks";
 import {setPageNumber,setMediaType } from "../app_state/app_logic/state";
-import { useGetBookmarkQuery } from "../app_state/Query/movie";
+
 
 function TopRated() {
 
@@ -35,7 +35,7 @@ function TopRated() {
 const {data:rate,isLoading} = useGetTopRatedQuery({page,type,key})
   const mediaResults:TopRatedMovies[]| TopRatedSeries[] = rate?.results || []
   const pageNumber = rate?.total_pages;
-  const { data: bookmark } = useGetBookmarkQuery();
+
 
 
 
@@ -92,7 +92,6 @@ const {data:rate,isLoading} = useGetTopRatedQuery({page,type,key})
           </section>
           <Grid
             median_type={type}
-            bookmark={bookmark?.newBookmarkLists || []}
             items={mediaResults}
           />
           <section className="page-number-section">
