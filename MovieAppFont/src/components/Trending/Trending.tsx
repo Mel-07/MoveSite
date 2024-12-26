@@ -1,4 +1,11 @@
-import { TmdbMovie_TmdbSeries,TopRatedMovies,TopRatedSeries,TmdbMovie,TmdbSeries,TmdbTVShowAndMovieResponse} from "../../Types/apptypes";
+import {
+  TmdbMovie_TmdbSeries,
+  TopRatedMovies,
+  TopRatedSeries,
+  TmdbMovie,
+  TmdbSeries,
+  TmdbTVShowAndMovieResponse,
+} from "../../Types/apptypes";
 import { Link } from "react-router-dom";
 import H1 from "../Heading/H1";
 import Skeleton from "react-loading-skeleton";
