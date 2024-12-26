@@ -25,6 +25,7 @@ const allowedOrigins = {
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:8000",
+    "'https://move-site-gamma.vercel.app'",
   ],
   staging: ["https://move-site-gamma.vercel.app/"],
 };
