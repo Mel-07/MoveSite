@@ -6,7 +6,12 @@ import {  useState } from "react";
 import useSearch from "../utils/useSearch";
 import Grid from "../components/Shared/components/Grid";
 const key = import.meta.env.VITE_MOVIE_KEY;
-import { TopRatedSeries,TopRatedMovies,SearchType} from "../Types/apptypes";
+import {
+  TopRatedSeries,
+  TopRatedMovies,
+  SearchType,
+  TmdbMovie_TmdbSeries,
+} from "../Types/apptypes";
 import { getPageNumberArray } from "../helpers/functions";
 import { useGetTopRatedQuery } from "../app_state/Query/movie";
 import { useAppDispatch,useAppSelector} from "../app_state/hooks";
@@ -31,7 +36,14 @@ function TopRated() {
 
   /* fetch the top-rated movies and series  */
   const { data: rate, isLoading } = useGetTopRatedQuery({ page, type, key });
-  const mediaResults: TopRatedMovies[] | TopRatedSeries[] = rate?.results || [];
+  const mediaResults:
+    | TopRatedMovies[]
+    | TopRatedSeries[]
+    | TmdbMovie_TmdbSeries =
+    (rate?.results as
+      | TmdbMovie_TmdbSeries
+      | TopRatedMovies[]
+      | TopRatedSeries[]) || [];  ;
   const pageNumber = rate?.total_pages;
 
   // const { data:bookmark} = useGetBookmarkQuery()
