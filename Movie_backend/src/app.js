@@ -20,11 +20,31 @@ const {Users} = require('./model/users.model')
 const path = require('path');
 require('dotenv').config()
 const {scryptSync}= require('crypto')
-
+const allowedOrigins = {
+  development: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:8000",
+  ],
+  staging: ["https://move-site-gamma.vercel.app/"],
+};
+const env = process.env.NODE_ENV || "development";
 app.use(express.json())
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: (origin,cb)=>{
+      if(!origin){
+
+        return cb(null,true)
+      }
+
+      if(allowedOrigins[env].includes(origin)){
+
+        return cb(null,true)
+      }
+
+      return cb(new Error("Not allowed by CORS"))
+    },
     credentials: true, 
   })
 );
@@ -143,7 +163,7 @@ app.get("/profile", isAuthenticated, getProfile);
 app.post("/profile", isAuthenticated, updateProfile);
 app.delete('/delete',isAuthenticated,deleteBookmark)
 /* served files should be the last  */
-app.get("/*", isAuthenticated, staticServer);
+app.get("/*", isAuthenticated,staticServer);
 
 
 module.exports =app

@@ -6,14 +6,23 @@ import userImageFallback from '../../assets/images/user.svg'
 import { ChangeEvent, useEffect, useState } from "react";
 import './from.scss'
 import '../Shared/styles/from-error.scss'
-import { checkFileSize, validateEmail, validatePassWord, validateUserName } from "../../helpers/vaildators";
+import { checkFileSize, } from "../../helpers/vaildators";
 import { useGetProfileQuery, usePostProfileMutation } from "../../app_state/Query/movie";
 import { useAppDispatch, useAppSelector } from "../../app_state/hooks";
 import { setFormData, setProfileData } from "../../app_state/app_logic/state";
 
 function Form() {
   const dispatch = useAppDispatch();
-  const {email,userName,password,image} = useAppSelector(state => state.movieSlice.formData)
+  const {email:{
+    email,
+    emailIsValid
+  },userName:{
+    userName,
+    userNameIsValid
+  },password:{
+    password,
+    passwordIsValid
+  },image} = useAppSelector(state => state.movieSlice.formData)
     // const [formData,setFormData] = useState<FormDataProfile>({
     //     image:null,
     //     userName:'',
@@ -87,9 +96,9 @@ function Form() {
     const handlePost = () => {
 
       if (
-        validateUserName(userName) &&
-        validateEmail(email) &&
-        validatePassWord(password)
+        userNameIsValid &&
+        emailIsValid &&
+        passwordIsValid
       ) {
        async function postToProfile(){
 
@@ -223,19 +232,19 @@ function Form() {
           </div>
 
           <ul className="from-error-container">
-            {formError.name && (
+            {!userNameIsValid && (
               <li>
                 <FaExclamation className="exclamation" />
                 <span>Name should have a Min length of 3</span>
               </li>
             )}
-            {formError.email && (
+            {!emailIsValid && (
               <li>
                 <FaExclamation className="exclamation" />
                 <span>Invalid Email</span>
               </li>
             )}
-            {formError.password && (
+            {!passwordIsValid && (
               <li>
                 <FaExclamation className="exclamation" />
                 <span>

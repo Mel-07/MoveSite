@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { State, AllResults, TmdbMovie } from "../../Types/apptypes";
+import { validateUserName,validateEmail,validatePassWord } from "../../helpers/vaildators";
 const initialState:State= {
     allResults:[],
     allBookmarks:[],
@@ -8,9 +9,18 @@ const initialState:State= {
     isBooked:false,
     formData:{
       image:null,
-      userName:'',
-      email:'',
-      password:''
+      userName:{
+        userName:'',
+        userNameIsValid:false
+      },
+      email:{
+        email:'',
+        emailIsValid:false
+      },
+      password:{
+        password:'',
+        passwordIsValid:false
+      }
     }
 }
 
@@ -47,10 +57,19 @@ export const movieSlice = createSlice({
       const {userName,email,image, password} = action.payload;
       if(userName || email || image){
         state.formData = {
-          userName,
-          email,
+          userName:{
+            userName,
+            userNameIsValid:true
+          },
+          email:{
+            email,
+            emailIsValid:true
+          },
           image,
-          password
+          password:{
+            password,
+            passwordIsValid:true
+          }
         }
       }
     },
@@ -61,13 +80,16 @@ export const movieSlice = createSlice({
       const {name,value} = action.payload
 
       if(name == 'userName'){
-        state.formData[name] = value;
+        state.formData[name].userNameIsValid = validateUserName(value)
+        state.formData[name][name] = value;
       }
       if(name == 'email'){
-        state.formData[name] = value
+        state.formData[name].emailIsValid = validateEmail(value)
+        state.formData[name][name] = value
       }
       if(name == 'password'){
-        state.formData[name] = value
+        state.formData[name].passwordIsValid = validatePassWord(value)
+        state.formData[name][name] = value
       }
     }
   },

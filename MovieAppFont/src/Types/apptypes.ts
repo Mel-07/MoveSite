@@ -403,10 +403,19 @@ interface State {
   type: "movie" | "tv";
   isBooked: boolean;
   formData: {
-    image: string|null;
-    userName: string;
-    email: string;
-    password: string;
+    image: string | null;
+    userName: {
+      userName: string;
+      userNameIsValid: boolean;
+    };
+    email: {
+      email: string;
+      emailIsValid:boolean
+    };
+    password:{
+      password:string,
+      passwordIsValid:boolean
+    }
   };
 }
 
