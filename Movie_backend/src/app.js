@@ -20,7 +20,6 @@ const {Users} = require('./model/users.model')
 const path = require('path');
 require('dotenv').config()
 const {scryptSync}= require('crypto')
-
 app.use(express.json())
 app.use(
   cors({
@@ -28,7 +27,7 @@ app.use(
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:8000",
-    "'https://move-site-gamma.vercel.app'",
+    "'https://move-site-mel.vercel.app'",
   ],
     credentials: true, 
   })

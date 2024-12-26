@@ -1,4 +1,6 @@
-const port = 8000
+require("dotenv").config()
+
+const port = process.env.PORT;
 const http = require(`http`)
 const app = require('./src/app')
 const {sequelizeCall} = require('./src/model/db')
