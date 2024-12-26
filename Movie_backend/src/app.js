@@ -24,12 +24,12 @@ app.use(express.json())
 app.use(
   cors({
     origin: [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:8000",
-    "'https://move-site-mel.vercel.app'",
-  ],
-    credentials: true, 
+      "https://move-site-mel.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "http://localhost:8000",
+    ],
+    credentials: true,
   })
 );
 app.use(
