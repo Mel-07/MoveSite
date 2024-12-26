@@ -2,6 +2,8 @@ import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Trending, TmdbSeries, TopRatedMovies, TopRatedSeries,TmdbUpcoming,TmdbTopRatedMovie,TmdbTopRatedSeries,BookmarkList, TmdbTVShowAndMovieResponse, TmdbMovie} from "../../Types/apptypes";
 import { FormDataProfile } from "../../Types/fromType";
 
+const API = import.meta.env.VITE_API_URL;
+
 
 export const movieApi = createApi({
   reducerPath: "movieApi",
@@ -54,7 +56,7 @@ export const movieApi = createApi({
 export const backendApi = createApi({
   reducerPath: "backendApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:8000`,
+    baseUrl: API,
   }),
   tagTypes: ["Bookmarks"],
   refetchOnReconnect: true,
