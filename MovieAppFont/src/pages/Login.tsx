@@ -4,6 +4,7 @@ import CreateForm from '../components/Forms/CreateForm';
 import appLogo from '../assets/images/svgviewer-output.svg'
 import { useState } from 'react';
 function Login() {
+
   const [formType,setFormType] = useState<boolean>(true)
   return (
     <>

@@ -62,6 +62,30 @@ export const backendApi = createApi({
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({
+    postLogin: builder.mutation<
+      {
+        redirect:string
+      },
+      {
+        userName: string;
+        password: string;
+      }
+    >({
+      query: ({ userName, password }) => (
+        {
+        url: "/",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body:{
+          userName,
+          password
+        },
+      }),
+    }),
+
     getBookmark: builder.query<BookmarkList, void>({
       query: () => ({
         url: `/bookmarks`,
@@ -104,12 +128,15 @@ export const backendApi = createApi({
         headers: {
           "Content-Type": "application/json",
         },
-        body:profileData,
+        body: profileData,
         credentials: "include",
       }),
     }),
     /* delete bookmark */
-    deletePost: builder.mutation<{success:true}, { id: number|null; title: string | null }>({
+    deletePost: builder.mutation<
+      { success: true },
+      { id: number | null; title: string | null }
+    >({
       query: (content) => ({
         url: "delete",
         headers: {
@@ -125,4 +152,4 @@ export const backendApi = createApi({
 });
 
 export const{useGetTitleQuery,useGetTrendingQuery,useGetUpcomingQuery,useGetRecommendationsMovieQuery,useGetTopRatedQuery} = movieApi;
-export const {useGetBookmarkQuery, useGetProfileQuery,usePostProfileMutation,usePostBookmarkMutation,useDeletePostMutation} = backendApi
+export const {useGetBookmarkQuery, useGetProfileQuery,usePostProfileMutation,usePostBookmarkMutation,useDeletePostMutation,usePostLoginMutation} = backendApi

@@ -8,6 +8,7 @@ import ErrorIndicate from '../Shared/components/ErrorIndicate';
 import { validatePassWord, validateUserName } from '../../helpers/vaildators';
 import { FormValidateLogin } from '../../Types/fromType';
 import { useNavigate } from 'react-router-dom';
+import { usePostLoginMutation } from '../../app_state/Query/movie';
 interface Props {
   setFormType: Dispatch<SetStateAction<boolean>>
 }
@@ -26,6 +27,7 @@ function LoginForm({setFormType}:Props) {
     password: false,
   });
   const [disableBtn, setDisableBtn] = useState<boolean>(true)
+  const [addDetails] = usePostLoginMutation();
 
   useEffect(()=>{
     function checkValidity(){
@@ -88,22 +90,13 @@ function LoginForm({setFormType}:Props) {
       const valid = Object.keys(formValidate).every((key) => formValidate[key] === true);
 
       if(valid){
-        const res = await fetch('http://localhost:8000/',{
-          method:"POST",
-          headers:{
-            "Content-Type":"application/json"
-          },
-          credentials:'include',
-          body:JSON.stringify({
-            userName:loginDetails.username,
-            password:loginDetails.password
-          })
+        const {data,error} = await addDetails({
+          userName: loginDetails.username,
+          password: loginDetails.password,
+        });
 
-
-        })
-
-        const data = await res.json()
-          if(!res.ok){
+        console.log(error)
+          if(!data){
             throw new Error ("Account not found")
           }else{
             navigate(data?.redirect)
