@@ -12,7 +12,6 @@ const sequelize = new Sequelize(
   }
 );
 
-
 async function sequelizeCall(){
 
     try {

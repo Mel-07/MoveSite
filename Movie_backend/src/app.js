@@ -61,6 +61,8 @@ passport.use(
       passwordField:"password"
     },
     async (username, password, done) => {
+
+      console.log(username,password)
       try {
         const user = await Users.findOne({
           where: { username, },
