@@ -13,71 +13,75 @@ interface Props {
   setFormType: Dispatch<SetStateAction<boolean>>
 }
 function LoginForm({setFormType}:Props) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [passwordVisible,setPassWordVisibility] = useState<boolean>(true)
+  const [passwordVisible, setPassWordVisibility] = useState<boolean>(true);
   /* Username and password */
   const [loginDetails, setLoginDetails] = useState({
-    username:'',
-    password:''
-  })
+    username: "",
+    password: "",
+  });
   /* state for validating the input  */
   const [formValidate, setFormValidate] = useState<FormValidateLogin>({
     username: false,
     password: false,
   });
-  const [disableBtn, setDisableBtn] = useState<boolean>(true)
+  const [disableBtn, setDisableBtn] = useState<boolean>(true);
   const [addDetails] = usePostLoginMutation();
 
-  useEffect(()=>{
-    function checkValidity(){
-      const valid = Object.keys(formValidate).every((key) => formValidate[key] === true);
-      setDisableBtn(!valid)
+  useEffect(() => {
+    function checkValidity() {
+      const valid = Object.keys(formValidate).every(
+        (key) => formValidate[key] === true
+      );
+      setDisableBtn(!valid);
     }
-    checkValidity()
-  },[formValidate])
+    checkValidity();
+  }, [formValidate]);
   /**
    * function for handling change event */
-  function handleInput(e:ChangeEvent<HTMLInputElement>){
-    const {name,value} = e.target
-    setLoginDetails((prev)=>{
-      return{
-        ...prev,[name]:value
-      }
-    })
+  function handleInput(e: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setLoginDetails((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
 
-    const valid = validity(name,value)
+    const valid = validity(name, value);
 
-    setFormValidate((prev)=>{
-      return{
-        ...prev,[name]:valid
-      }
-    })
+    setFormValidate((prev) => {
+      return {
+        ...prev,
+        [name]: valid,
+      };
+    });
   }
   /* validity function */
-  function validity(name:string,value:string):boolean{
+  function validity(name: string, value: string): boolean {
     switch (name) {
-      case "username":
-        {
-          return validateUserName(value)
-        }
+      case "username": {
+        return validateUserName(value);
+      }
       case "password": {
-        return validatePassWord(value)
+        return validatePassWord(value);
       }
 
-      default: return false
+      default:
+        return false;
     }
-  } 
-/**
- * setFormType 
- * function setForm for setting the form to false to switch to  create account**/
-  function setForm(){
-    setFormType(false)
+  }
+  /**
+   * setFormType m
+   * function setForm for setting the form to false to switch to  create account**/
+  function setForm() {
+    setFormType(false);
   }
   /**
    * function for showing password**/
-  function showPassword(){
-    setPassWordVisibility(!passwordVisible)
+  function showPassword() {
+    setPassWordVisibility(!passwordVisible);
   }
 
   /**
@@ -85,28 +89,30 @@ function LoginForm({setFormType}:Props) {
    * check if all validate state is true
    * if it is not true then throw error as a second check --> check even when button is disable :) <--
    */
-  async function loginAccount(){
+  async function loginAccount() {
     try {
-      const valid = Object.keys(formValidate).every((key) => formValidate[key] === true);
+      const valid = Object.keys(formValidate).every(
+        (key) => formValidate[key] === true
+      );
 
-      if(valid){
-        const {data,error} = await addDetails({
+      if (valid) {
+        const { data, error } = await addDetails({
           userName: loginDetails.username,
           password: loginDetails.password,
         });
 
-        console.log(error)
-          if(!data){
-            throw new Error ("Account not found")
-          }else{
-            navigate(data?.redirect)
-          }
-      }else{
-        throw new Error('Form inputs invalid')
+        console.log(error);
+        if (!data) {
+          throw new Error("Account not found");
+        } else {
+          navigate(data?.redirect);
+        }
+      } else {
+        throw new Error("Form inputs invalid");
       }
     } catch (error) {
-      const err =  error as Error
-      console.error(err)
+      const err = error as Error;
+      console.error(err);
     }
   }
   return (
@@ -143,7 +149,12 @@ function LoginForm({setFormType}:Props) {
           <span>Click </span>to Create Account
         </button>
       </div>
-      <button onClick={loginAccount} className="login-btn" type="button" disabled={disableBtn}>
+      <button
+        onClick={loginAccount}
+        className="login-btn"
+        type="button"
+        disabled={disableBtn}
+      >
         Login
       </button>
       <ErrorFormContainer>

@@ -64,24 +64,23 @@ export const backendApi = createApi({
   endpoints: (builder) => ({
     postLogin: builder.mutation<
       {
-        redirect:string
+        redirect: string;
       },
       {
         userName: string;
         password: string;
       }
     >({
-      query: ({ userName, password }) => (
-        {
+      query: ({ userName, password }) => ({
         url: "/",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body:{
+        body: {
           userName,
-          password
+          password,
         },
       }),
     }),
@@ -138,12 +137,14 @@ export const backendApi = createApi({
       { id: number | null; title: string | null }
     >({
       query: (content) => ({
-        url: "delete",
+        url: "/delete",
         headers: {
           "Content-type": "application/json",
         },
         method: "DELETE",
-        credentials: "include",
+        credentials: "include" as RequestCredentials
+        
+        ,
         body: content,
       }),
       invalidatesTags: ["Bookmarks"],
