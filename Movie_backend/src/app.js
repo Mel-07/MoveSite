@@ -21,17 +21,34 @@ const path = require('path');
 require('dotenv').config()
 const {scryptSync}= require('crypto')
 app.use(express.json())
+const allowedOrigins = [
+  "https://move-site-mel.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:5174",
+];
 app.use(
   cors({
-    origin: [
-      "https://move-site-mel.vercel.app",
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "http://localhost:8000",
-    ],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://move-site-mel.vercel.app");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
+
 app.use(
   session({
     secret: process.env.COOKIES_KEY_TWO,
