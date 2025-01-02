@@ -9,11 +9,13 @@ import { validateEmail, validatePassWord, validateUserName } from "../../helpers
 import { useNavigate } from "react-router-dom";
 import ErrorFormContainer from "../Shared/components/ErrorFormContainer";
 import ErrorIndicate from "../Shared/components/ErrorIndicate";
+import { usePostCreateNewuserMutation } from "../../app_state/Query/movie";
 interface Props {
   setFormType: Dispatch<SetStateAction<boolean>>;
 }
 
 function CreateForm({setFormType}:Props) {
+  const [createUser] = usePostCreateNewuserMutation()
   const [passwordVisible, setPassWordVisibility] = useState<boolean>(true);
   const [confirmPasswordVisible, setConfirmPassWordVisibility] =
     useState<boolean>(true);
@@ -100,22 +102,15 @@ function CreateForm({setFormType}:Props) {
   async function handleUser(){
 
     try {
-        const res = await fetch('http://localhost:8000/sign-in',{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                userName:formDetails.username,
-                email:formDetails.email,
-                password:formDetails.password
-            })
-        });
-        if (!res.ok) {
+      const {data,error} = await createUser({
+        userName: formDetails.username,
+        email: formDetails.email,
+        password: formDetails.password,
+      });
+
+        if (error) {
             throw new Error("Request Failed");
         }
-
-        const data = await res.json();
         console.log(data)
         if(data){
             navigate('/app')

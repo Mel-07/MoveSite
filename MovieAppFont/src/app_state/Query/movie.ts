@@ -62,6 +62,26 @@ export const backendApi = createApi({
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({
+    postCreateNewuser: builder.mutation<
+      {
+        redirect:string
+      },
+      {
+        userName: string;
+        email: string;
+        password: string;
+      }
+    >({
+      query: (detailOfNewUsers) => ({
+        url: "/sign-in",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: detailOfNewUsers,
+      }),
+    }),
     postLogin: builder.mutation<
       {
         redirect: string;
@@ -142,9 +162,8 @@ export const backendApi = createApi({
           "Content-type": "application/json",
         },
         method: "DELETE",
-        credentials: "include" as RequestCredentials
-        
-        ,
+        credentials: "include" as RequestCredentials,
+
         body: content,
       }),
       invalidatesTags: ["Bookmarks"],
@@ -153,4 +172,4 @@ export const backendApi = createApi({
 });
 
 export const{useGetTitleQuery,useGetTrendingQuery,useGetUpcomingQuery,useGetRecommendationsMovieQuery,useGetTopRatedQuery} = movieApi;
-export const {useGetBookmarkQuery, useGetProfileQuery,usePostProfileMutation,usePostBookmarkMutation,useDeletePostMutation,usePostLoginMutation} = backendApi
+export const {useGetBookmarkQuery, useGetProfileQuery,usePostProfileMutation,usePostBookmarkMutation,useDeletePostMutation,usePostLoginMutation,usePostCreateNewuserMutation} = backendApi
