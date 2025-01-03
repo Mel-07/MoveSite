@@ -100,10 +100,8 @@ function LoginForm({setFormType}:Props) {
           userName: loginDetails.username,
           password: loginDetails.password,
         });
-
-        console.log(error);
-        if (!data) {
-          throw new Error("Account not found");
+        if (error) {
+                  console.log(error);
         } else {
           navigate(data?.redirect);
         }

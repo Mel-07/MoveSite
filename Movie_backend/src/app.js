@@ -79,7 +79,6 @@ passport.use(
     },
     async (username, password, done) => {
 
-      console.log(username,password)
       try {
         const user = await Users.findOne({
           where: { username, },
@@ -141,6 +140,7 @@ app.post("/", (req, res, next) => {
       if (err) {
         return next(err);
       }
+      console.log(req.body);
       return res.status(200).json({ redirect: "/app" });
     });
   })(req, res, next);
