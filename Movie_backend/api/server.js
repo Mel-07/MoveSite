@@ -27,14 +27,14 @@ const sync = require("./src/model/sync");
 
 // startSever()
 
-module.exports = async (req, res) => {
-  try {
-    await sequelizeCall();
-    await sync();
-    app(req, res); // Pass the request/response directly to your Express app
-  } catch (error) {
-    console.error("Server error:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
+// module.exports = async (req, res) => {
+//   try {
+//     await sequelizeCall();
+//     await sync();
+//     app(req, res); // Pass the request/response directly to your Express app
+//   } catch (error) {
+//     console.error("Server error:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
 
