@@ -9,23 +9,23 @@ const sync = require("./src/model/sync");
 
 
 
-// async function startSever(){
+async function startSever(){
 
-//   try {
+  try {
 
-//     await sequelizeCall()
-//     await sync(/* {force:true } */ /* { alter: true } */);
+    await sequelizeCall()
+    await sync(/* {force:true } */ /* { alter: true } */);
 
-//     const server = http.createServer(app);
-//     server.listen(port, () => {
-//       console.log(`listening on port ${port}`);
-//     });
-//   } catch (error) {
-//     console.error("Unable to connect to the database: ", error);
-//   }
-// }
+    const server = http.createServer(app);
+    server.listen(port, () => {
+      console.log(`listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Unable to connect to the database: ", error);
+  }
+}
 
-// startSever()
+startSever()
 
 // module.exports = async (req, res) => {
 //   try {
