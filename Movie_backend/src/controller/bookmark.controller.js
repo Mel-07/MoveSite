@@ -29,7 +29,7 @@ async function addOrRemoveBookmark(req,res){
 
     try {
 
-        const bookmarkCreated = await Bookmark.create({
+await Bookmark.create({
           backdrop_path,
           overview,
           poster_path,
@@ -53,7 +53,6 @@ async function addOrRemoveBookmark(req,res){
           userId
         });
 
-        console.log(bookmarkCreated.toJSON())
         return res.status(200).json({
           success: true,
         });
@@ -96,7 +95,6 @@ try {
       }))
      }
   }
-    console.log(newBookmarkLists.length);
     return res.status(200).json({
       newBookmarkLists,
       numberOfBookmark:newBookmarkLists.length

@@ -58,16 +58,6 @@ const Bookmark = sequelize.define(
       type: DataTypes.STRING(150),
     },
   },
-  {
-/*     indexes: [
-      {
-        unique:true,
-        fields: [
-          'userId'
-        ],
-      },
-    ], */
-  }
 );
 module.exports = {
     Bookmark

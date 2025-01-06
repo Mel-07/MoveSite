@@ -1,5 +1,4 @@
 
-const path = require('path')
 async function getLoginFrom (req,res){
 
   try {
@@ -10,11 +9,7 @@ return console.log(res)
     })
   }
 }
-// function loginUser (_, res) {
-//     res.redirect("/");
-// }
 
 module.exports = {
-  // loginUser,
   getLoginFrom,
 };

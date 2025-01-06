@@ -4,13 +4,16 @@ const app = express();
 const cors = require('cors')
 const { v4: uuidv4 } = require("uuid");
 const session = require("express-session")
+const SequelizeStore = require("connect-session-sequelize")(
+  session.Store
+);
+const { sequelize } = require("./model/db");
 const {
   getProfile,
   updateProfile,
   createUser,
   addOrRemoveBookmark,
   deleteBookmark,
-  // loginUser,
   getLoginFrom,
   staticServer,
   getBookmark
@@ -49,8 +52,12 @@ app.use(
       maxAge: 2 * 60 * 60 * 1000,
       path: "/",
       secure: false,
-      sameSite:'lax'
+      sameSite: "lax",
     },
+    store: new SequelizeStore({
+      db: sequelize,
+      checkExpirationInterval: 15 * 60 * 1000,
+    }),
     genid: function () {
       return uuidv4();
     },
@@ -138,7 +145,6 @@ app.post("/", (req, res, next) => {
 app.post("/sign-in", createUser);
 app.get("/", getLoginFrom);
 function isAuthenticated(req, res, next) {
-  console.log(req.isAuthenticated(), "check");
   if (req.isAuthenticated()) {
     return next();
   }
